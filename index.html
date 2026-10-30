@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="SK 海力士 (000660.KS) 營收、ASP 與位元出貨、三率、存貨與費用、供需、HBM 市占、股東回報與現金流圖表">
+<meta name="description" content="SK 海力士 (000660.KS) 營收、ASP 與位元出貨、三率、存貨與費用、供需、股東回報與現金流圖表">
 <title>海力士營收趨勢</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap">
 </head>
@@ -154,10 +154,6 @@ table.cmp.sum tr.gs:not(:first-child) td{ border-top:1px solid var(--muted) }
   <h2>技術路線：6F² 用到極限，再轉 4F² 或 3D DRAM</h2>
   <p class="note">[註1]: 目前量產使用 6F²，是綜合良率與成本結構、量產可靠度、客戶認證後的選擇，不只看單位面積更小、密度更高這一個維度（26Q3 法說會）。</p>
   <p class="note">[註2]: 公司正準備分階段路線圖，涵蓋現有 DRAM 的極限微縮，到 4F² 與 3D DRAM，技術與經濟條件到位後再轉換；與美光表態完全不考慮 4F² 不同。技術開發完成與商業化是兩個時點（自有摘要）。</p>
-
-  <h2>三家 HBM 市佔率比較</h2>
-  <div class="card"><div id="chart13" class="c l"></div></div>
-  <p class="note">資料：Counterpoint，營收口徑，經韓國媒體引述；3Q25 與 2Q25 美光市占為 100% 減另兩家推得。2Q25 曾以出貨量口徑公布為 62/17/21，此處統一用營收口徑。</p>
 
   <h2>股東回報</h2>
   <div class="duo">
@@ -453,16 +449,7 @@ table.cmp.sum tr.gs:not(:first-child) td{ border-top:1px solid var(--muted) }
       series:[ { name:"出貨（爬坡期）", color:tok("--bar-est"), data:ramp }, { name:"放量", color:tok("--bar"), data:full } ]
     });
   }
-  /* ---------- 圖十三：HBM 市占 ---------- */
-  function build13(){
-    mk("chart13","HBM 營收市占率",{
-      chart:{type:"column"},
-      xAxis:ax(["1Q25","2Q25","3Q25","4Q25","1Q26","2Q26"]), yAxis:ay("Percent",{ min:0, max:80, tickInterval:20, labels:{style:{color:tok("--muted"),fontSize:"11px"},format:"{value}%"} }),
-      tooltip:tip(function(p){ return p.y+"%"; },function(t){ return (t.x==="2Q25"||t.x==="3Q25")?"<br>美光為 100% 減另兩家推得":""; }),
-      plotOptions:{ column:{ borderRadius:2, pointPadding:0.06, groupPadding:0.16 } },
-      series:[ { name:"SK 海力士", color:"#E67E22", data:[69,64,56,57,58,50] }, { name:"三星", color:"#2C4A8C", data:[13,15,23,22,21,33] }, { name:"美光", color:"#42A9E5", data:[18,21,21,21,21,18] } ]
-    });
-  }
+
   /* ---------- 圖十四／十五：股東回報 ---------- */
   function build14(){
     mk("chart14","2026 年股東回報組成（兆韓元，約數）",{
@@ -514,7 +501,7 @@ table.cmp.sum tr.gs:not(:first-child) td{ border-top:1px solid var(--muted) }
 
   function build(){
     build1(); build2();
-    build6(); build7(); build9(); build11b(); build15(); build13(); build14(); build16(); buildCF();
+    build6(); build7(); build9(); build11b(); build15(); build14(); build16(); buildCF();
   }
   Highcharts.setOptions({ lang:{ rangeSelectorZoom:"Zoom", thousandsSep:"," } });
   build();
