@@ -170,6 +170,11 @@ table.cmp.sum tr.gs:not(:first-child) td{ border-top:1px solid var(--muted) }
   </div>
   <p class="note">[註1]: 26Q3 營業現金流 54.78 兆韓元，低於 26Q2 的 65.71 兆；投資現金流 −42.89 兆，其中長期金融投資轉出 30.85 兆，並非資本支出；籌資現金流轉為流入 10.78 兆，主要來自庫藏股處分等 10.31 兆（26Q3 簡報）。</p>
   <p class="note">[註2]: 淨現金＝現金及短期金融商品 − 附息負債；26Q3 現金 114.46 兆、附息負債 15.80 兆，淨負債比 −32%（26Q3 簡報）。自由現金流＝營業現金流 − 購置不動產、廠房及設備，為自行換算。</p>
+
+  <h2>海力士季度損益與現金流</h2>
+  <div class="card"><div id="chartCF" class="c xl"></div></div>
+  <p class="note">[註1]: 異常解釋：26Q3 投資現金流大幅流出，主要是長期金融投資轉出 30.85 兆韓元，不是資本支出；籌資現金流轉為流入，主要是庫藏股處分等 10.31 兆韓元（26Q3 簡報）。</p>
+  <p class="note">[註2]: 淨利為剔除匯兌與其他業外損益後的淨利（口徑同三率圖）；淨資本支出欄為購置不動產、廠房及設備（總額，海力士無另列政府補助扣除）；自由現金流＝營業現金流 − 購置不動產、廠房及設備。</p>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/11.4.8/highstock.js"></script>
@@ -489,9 +494,30 @@ table.cmp.sum tr.gs:not(:first-child) td{ border-top:1px solid var(--muted) }
     });
   }
 
+  /* ---------- 圖：季度損益與現金流（兆韓元；各季簡報 Statement of Cash Flows） ---------- */
+  function buildCF(){
+    var n=5, L=Q.length-n, QL=Q.slice(L);
+    var CFI5=[-5154,-12258,-7228,-28747,-42892], CFF5=[1375,-1549,-2951,-4666,10781];
+    var adj=NI.map(function(v,i){ var r=TAXE[i]/PRE[i]; if(!(r>=0&&r<=0.35)) r=0; return (PRE[i]-FXL[i]-OTHN[i])*(1-r); });
+    function sl(a){ return a.slice(L).map(T); }
+    mk("chartCF","現金流量與自由現金流（兆韓元）",{
+      xAxis:ax(QL), yAxis:ay("兆韓元",{ plotLines:[{value:0,color:tok("--muted"),width:1,zIndex:3}] }),
+      plotOptions:{ column:{ pointPadding:0.04, groupPadding:0.1 } },
+      tooltip:{ formatter:function(){ var s="<b>"+this.x+"</b>"; this.points.forEach(function(p){ s+='<br><span style="color:'+p.color+'">●</span> '+p.series.name+"：<b>"+(p.y>0&&p.series.options.signed?"+":"")+fmtT(p.y)+"</b> 兆"; }); return s; } },
+      series:[
+        { name:"淨利（剔除匯兌與其他業外）", type:"column", color:"#7f8c9a", data:sl(adj) },
+        { name:"營業現金流", type:"column", color:"#42A9E5", data:sl(CFO) },
+        { name:"投資現金流", type:"column", color:"#8E44AD", data:CFI5.map(T), signed:true },
+        { name:"籌資現金流", type:"column", color:"#F39C12", data:CFF5.map(T), signed:true },
+        { name:"淨資本支出", type:"column", color:"#A9D4F2", data:sl(CPX) },
+        { name:"自由現金流", type:"column", color:tok("--yoy"), data:sl(CFO.map(function(v,i){ return v-CPX[i]; })) }
+      ]
+    });
+  }
+
   function build(){
     build1(); build2();
-    build6(); build7(); build9(); build11b(); build15(); build13(); build14(); build16();
+    build6(); build7(); build9(); build11b(); build15(); build13(); build14(); build16(); buildCF();
   }
   Highcharts.setOptions({ lang:{ rangeSelectorZoom:"Zoom", thousandsSep:"," } });
   build();
