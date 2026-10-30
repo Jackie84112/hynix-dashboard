@@ -46,7 +46,24 @@ table.cmp.sum td.grp.ga{ border-left-color:#E67E22 }
 table.cmp.sum td.grp.gb{ border-left-color:#8E44AD }
 table.cmp.sum tr.hl td:not(.grp){ background:rgba(230,126,34,0.09) }
 table.cmp.sum tr.gs:not(:first-child) td{ border-top:1px solid var(--muted) }
-@media (max-width:760px){ .duo{ grid-template-columns:1fr } }
+.kpis{ display:grid; grid-template-columns:repeat(5,1fr); gap:10px }
+.kpi{ background:var(--card); border:1px solid var(--line); border-top:3px solid var(--bar); border-radius:8px; padding:10px 10px 9px; min-width:0 }
+.kpi .v{ font-size:24px; font-weight:700; line-height:1.2; font-variant-numeric:tabular-nums }
+.kpi .v small{ font-size:13px; font-weight:500; color:var(--muted) }
+.kpi .k{ font-size:12px; color:var(--muted); line-height:1.45; margin-top:2px }
+ul.terms{ list-style:none; margin:0; padding:2px 8px 6px; display:flex; flex-direction:column; gap:12px; font-size:13px; line-height:1.55 }
+ul.terms li{ display:flex; gap:10px; align-items:flex-start }
+ul.terms .ic{ flex:none; width:28px; height:28px; border-radius:50%; background:rgba(230,126,34,0.14); color:var(--bar); display:grid; place-items:center; font-size:14px; font-weight:700 }
+ul.terms b{ font-weight:700 }
+.tl{ display:grid; grid-template-columns:minmax(120px,1.6fr) repeat(5,1fr); row-gap:10px; padding:4px 8px 10px; font-size:12.5px }
+.tl-h{ color:var(--muted); font-weight:500; text-align:center; border-bottom:1px solid var(--line); padding-bottom:4px }
+.tl-l{ padding-right:10px; line-height:1.4; align-self:center }
+.tl-r{ grid-column:2/7; display:grid; grid-template-columns:repeat(5,1fr); background:repeating-linear-gradient(90deg,transparent 0 calc(20% - 1px),var(--line) calc(20% - 1px) 20%) }
+.tl .bar{ grid-row:1; border-radius:4px; padding:6px 8px; font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; text-align:center }
+.tl .b1{ background:var(--bar); color:#fff }
+.tl .b2{ background:rgba(230,126,34,0.22); color:var(--fg); border:1px dashed var(--bar) }
+.tl .b3{ background:rgba(231,76,60,0.16); color:var(--fg); border:1px solid #E74C3C }
+@media (max-width:760px){ .duo{ grid-template-columns:1fr } .kpis{ grid-template-columns:repeat(2,1fr) } .tl{ grid-template-columns:repeat(5,1fr) } .tl-h:first-child{ display:none } .tl-l{ grid-column:1/-1; padding:4px 0 0 } .tl-r{ grid-column:1/-1 } }
 @media (max-width:480px){ .c.xl{ height:420px } h1{ font-size:19px } }
 </style>
 
@@ -97,30 +114,44 @@ table.cmp.sum tr.gs:not(:first-child) td{ border-top:1px solid var(--muted) }
 
   <h2 style="text-align:center">需求仍大於供給：預期到 2030 年前供不應求</h2>
 
-  <h2>需求：量</h2>
+  <h2>需求：長期協議（LTA）鎖定產能與出貨能見度</h2>
+  <div class="kpis">
+    <div class="kpi"><div class="v">14<small> 家</small></div><div class="k">LTA 客戶（26Q2 約 10 家）</div></div>
+    <div class="kpi"><div class="v">50%<small>+</small></div><div class="k">2027–28 年產能已簽約</div></div>
+    <div class="kpi"><div class="v">5<small> 年</small></div><div class="k">標準合約期，部分洽談延長</div></div>
+    <div class="kpi"><div class="v">2<small> 倍+</small></div><div class="k">客戶 HBM 需求 ÷ 目前供給</div></div>
+    <div class="kpi"><div class="v">2029</div><div class="k">DRAM 與 HBM 出貨量能見度</div></div>
+  </div>
   <div class="duo">
-    <div class="col">
-      <div class="card"><div id="chart9" class="c s"></div></div>
-      <p class="note">[註]: 2027 年可實現需求位元成長 DRAM +mid-20% YoY、NAND +high-teen% YoY；全球 CSP CapEx 2027 年成長 60%+，AI 資料中心基礎建設市場至 2030 年 CAGR 約 40%（26Q3 法說會，市調機構估計）。</p>
-    </div>
-    <div class="col">
-      <div class="card"><div id="chart10" class="c s"></div></div>
-      <p class="note">[註]: 長期協議（LTA）客戶由約 10 家增至 14 家，含主要 CSP；標準 5 年期，部分客戶洽談延長；2027–28 年已鎖定產能超過總產能 50%，價格在客戶同意區間內，並有押金等履約保障（26Q3 法說會）。</p>
+    <div class="card"><div id="chart10" class="c s"></div></div>
+    <div class="card"><div id="chart9" class="c s"></div></div>
+  </div>
+  <div class="duo">
+    <div class="card"><div id="chart9b" class="c s"></div></div>
+    <div class="card">
+      <div class="tt">合約保障條件</div>
+      <ul class="terms">
+        <li><span class="ic">$</span><div><b>價格區間</b><br>價格落在客戶同意的區間內，有一定價格保護，但細節未明說</div></li>
+        <li><span class="ic">◆</span><div><b>押金等履約保障</b><br>客戶以押金等方式擔保履約，降低砍單風險</div></li>
+        <li><span class="ic">↻</span><div><b>5 年期、洽談延長</b><br>標準合約 5 年，部分客戶正在洽談延長</div></li>
+        <li><span class="ic">☁</span><div><b>客戶涵蓋主要 CSP</b><br>伺服器端能見度高於其他終端</div></li>
+      </ul>
     </div>
   </div>
-
-  <h2>需求：價格與產品組合</h2>
-  <div class="card"><div class="tblwrap">
-    <table class="cmp">
-      <thead><tr><th>季度</th><th>現象</th><th>原因</th><th>法說會承諾／觀察</th></tr></thead>
-      <tbody>
-        <tr><td>26Q2</td><td>ASP 季增低於行業均值</td><td>HBM3E 合約價低且占比大；HBM4 等高價值產品出貨延遲</td><td>26H2 大量出貨</td></tr>
-        <tr><td>26Q3</td><td>ASP 季增大幅高於行業均值</td><td>HBM4 量產；DDR5 出貨位元數 QoQ 約 +40%（自有摘要）</td><td>DRAM ASP 高 20% 區段、NAND mid-20%</td></tr>
-        <tr><td>26Q4</td><td>HBM4 出貨與營收占比預期超越 HBM3E</td><td>M15X 年底前達滿載；1c 製程快速提升；DDR5 與 AI 伺服器用 LPDDR5 SOCAMM 銷售增加；NAND 321 層占韓國本土產能超過 50%</td><td>2027 年 HBM 談判已完成，與一般 DRAM 的獲利差距預期明顯縮小</td></tr>
-      </tbody>
-    </table>
-  </div></div>
-  <p class="note">[註]: 客戶提出的 HBM／DRAM 採購需求已談到 2029 年，HBM 需求量為目前供給的 2 倍以上，未來 HBM 價格預期趨近今年的一般 DRAM（自有摘要，26Q3 法說會）。質疑點：HBM4 由 12 層轉 8 層時，ASP 下降能否被每位元容量增加與 1c 提升抵消；CSP 為多出貨而增加顆數也未計入，暫列中性。</p>
+  <div class="card">
+    <div class="tt">能見度時間軸（26Q3 法說會）</div>
+    <div class="tl">
+      <div class="tl-h"></div><div class="tl-h">2026</div><div class="tl-h">2027</div><div class="tl-h">2028</div><div class="tl-h">2029</div><div class="tl-h">2030</div>
+      <div class="tl-l">LTA 已簽約產能 50%+</div><div class="tl-r"><span class="bar b1" style="grid-column:2/4">已鎖定 50%+</span></div>
+      <div class="tl-l">客戶已提出、洽談中的 HBM／DRAM 採購需求</div><div class="tl-r"><span class="bar b2" style="grid-column:2/5">談到 2029 年</span></div>
+      <div class="tl-l">DRAM 與 HBM 出貨量能見度</div><div class="tl-r"><span class="bar b2" style="grid-column:2/5">未來三年明確</span></div>
+      <div class="tl-l">供不應求（管理層預期）</div><div class="tl-r"><span class="bar b3" style="grid-column:1/5">2030 年前持續 →</span></div>
+    </div>
+  </div>
+  <p class="note">[註1]: 「2027–2028 年已簽約量占總產能 50% 以上，提升中長期營收能見度，我們未來三年、至 2029 年的 DRAM 與 HBM 出貨量能見度已相當明確。」（26Q3 法說會）</p>
+  <p class="note">[註2]: LTA 客戶由約 10 家增至 14 家，含主要 CSP；標準 5 年期，部分客戶洽談延長；價格在客戶同意區間內，並有押金等履約保障；價格保護程度管理層未說清楚（26Q3 法說會、自有摘要）。</p>
+  <p class="note">[註3]: 客戶 HBM 需求量為目前供給的 2 倍以上，因此 2030 年前仍供不應求；未來 HBM 價格預期趨近今年的一般 DRAM（26Q3 法說會）。</p>
+  <p class="note">[註4]: 質疑點：HBM4 由 12 層轉 8 層時，ASP 下降能否被每位元容量增加與 1c 提升抵消；CSP 為多出貨而增加顆數也未計入，暫列中性（自有摘要）。</p>
 
   <h2>供給：加項（CapEx 與新產能）</h2>
   <div class="card"><div id="chart11" class="c l"></div></div>
@@ -348,14 +379,23 @@ table.cmp.sum tr.gs:not(:first-child) td{ border-top:1px solid var(--muted) }
       series:[ { name:"銷管費用(L)", type:"column", color:tok("--bar"), yAxis:0, data:SGA.map(T) }, { name:"占營收(R)", type:"line", color:tok("--qoq"), yAxis:1, data:rt } ]
     });
   }
-  /* ---------- 圖九／十：需求 ---------- */
+  /* ---------- 圖九／十：需求（LTA） ---------- */
   function build9(){
-    mk("chart9","產業可實現需求位元成長（YoY）",{
-      xAxis:ax(["2026（26Q2 法說會）","2027（26Q3 法說會）"]), yAxis:ay("Percent",{ min:0, max:40, labels:{style:{color:tok("--muted"),fontSize:"11px"},format:"{value}%"} }),
-      tooltip:{ formatter:function(){ var s="<b>"+this.x+"</b>"; this.points.forEach(function(p){ s+='<br><span style="color:'+p.color+'">●</span> '+p.series.name+": <b>"+p.point.txt+"</b>"; }); return s; } },
-      plotOptions:{ column:{ pointPadding:0.06, groupPadding:0.2 }, series:{ dataLabels:{ enabled:true, formatter:function(){ return this.point.txt; }, style:{color:tok("--fg"),fontSize:"11px",fontWeight:"500",textOutline:"none"} } } },
-      series:[ { name:"DRAM", type:"column", color:"#2E86DE", data:[{y:25,txt:"+mid-20%"},{y:25,txt:"+mid-20%"}] },
-               { name:"NAND", type:"column", color:"#16A085", data:[{y:18,txt:"+high-teen%"},{y:18,txt:"+high-teen%"}] } ]
+    var lab={ enabled:true, style:{color:tok("--fg"),fontSize:"11px",fontWeight:"500",textOutline:"none"} };
+    mk("chart9","2027–28 年產能簽約比例",{
+      xAxis:ax(["2027","2028"]), yAxis:ay("占總產能",{ min:0, max:100, tickInterval:25, reversedStacks:false, labels:{style:{color:tok("--muted"),fontSize:"11px"},format:"{value}%"},
+        plotLines:[{value:50,color:"#E74C3C",dashStyle:"ShortDash",width:1.5,zIndex:5,label:{text:"50%",align:"right",style:{color:"#E74C3C",fontSize:"11px"}}}] }),
+      tooltip:{ formatter:function(){ return "<b>"+this.x+"</b><br>已簽約（LTA）：<b>50% 以上</b><br>其餘：未簽約或洽談中"; } },
+      plotOptions:{ column:{ stacking:"normal", pointPadding:0.15 } },
+      series:[ { name:"已簽約（LTA）", type:"column", color:tok("--bar"), data:[50,50], dataLabels:Highcharts.merge(lab,{ formatter:function(){ return "50%+"; }, style:{color:"#fff"} }) },
+               { name:"未簽約／洽談中", type:"column", color:tok("--bar-est"), data:[50,50] } ]
+    });
+    mk("chart9b","HBM：客戶需求 vs 目前供給",{
+      xAxis:ax(["目前供給","客戶需求"]), yAxis:ay("倍（目前供給＝1）",{ min:0, max:2.5, tickInterval:0.5 }),
+      legend:{enabled:false},
+      tooltip:{ formatter:function(){ return "<b>"+this.x+"</b><br>"+this.points[0].point.txt; } },
+      plotOptions:{ series:{ dataLabels:Highcharts.merge(lab,{ formatter:function(){ return this.point.txt; } }) } },
+      series:[ { name:"HBM", type:"column", data:[{y:1,txt:"1 倍",color:"#7f8c9a"},{y:2,txt:"2 倍以上",color:tok("--bar")}] } ]
     });
     mk("chart10","長期協議（LTA）客戶數",{
       xAxis:ax(["26Q2 法說會","26Q3 法說會"]), yAxis:ay("家",{ min:0, max:16, tickInterval:4 }),
