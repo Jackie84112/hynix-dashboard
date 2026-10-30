@@ -77,11 +77,6 @@ table.cmp.sum tr.gs:not(:first-child) td{ border-top:1px solid var(--muted) }
   <p class="note">[註3]: 26Q4 位元出貨增加來源——DRAM：年底前 M15X 工廠產能提升至最大水平，擴大 HBM4 生產，Q4 超越 HBM3E 成為主力產品；快速提升 1c 製程。NAND：321 層工藝提升至韓國本土產能 50%。</p>
   <p class="note">[註4]: 26Q2 ASP 季增不及行業均值，主因 HBM4 尚未出貨，且 HBM3E 占比大、多為 2025 年簽訂的低價合約；26Q3 DRAM ASP 高個位數至 high-20s% 對照行業 +13–18%，NAND mid-20s% 對照行業 +10–15%（26Q3 法說會）。</p>
 
-  <h2>營業利益與淨利</h2>
-  <div class="card"><div id="chart5" class="c l"></div></div>
-  <p class="note">[註1]: 26Q3 營業利益 83.33 兆韓元（季增 +38%、年增 +632%），營業利益率 80% 創單季新高；淨利 39.78 兆韓元，淨利率 38%，業外損失 32.63 兆韓元，含匯兌損失 11.63 兆（韓元升值）與投資資產相關損失 22.92 兆（26Q3 簡報）。</p>
-  <p class="note">[註2]: 26Q2 淨利 93.92 兆韓元含約 63.27 兆韓元投資資產相關利益（市場解讀為鎧俠），與 26Q3 業外方向相反，淨利不宜直接比較，營業利益較能反映本業。</p>
-
   <h2>毛利率、營業利益率與淨利率</h2>
   <div class="card"><div id="chart6" class="c l"></div></div>
   <p class="note">[註1]: 26Q3 毛利率 86%、營業利益率 80%，主因 ASP 上升與高附加價值產品銷售增加，且已吸收韓元升值的負面影響（26Q3 法說會）。</p>
@@ -305,15 +300,6 @@ table.cmp.sum tr.gs:not(:first-child) td{ border-top:1px solid var(--muted) }
   }
 
 
-  /* ---------- 圖五：營業利益與淨利 ---------- */
-  function build5(){
-    mk("chart5","營業利益與淨利（兆韓元）",{
-      xAxis:ax(Q), yAxis:ay("兆韓元",{ plotLines:[{value:0,color:tok("--muted"),width:1,zIndex:3}] }),
-      tooltip:tip(function(p){ return fmtT(p.y)+" 兆"; }),
-      plotOptions:{ column:{ pointPadding:0.06, groupPadding:0.12 } },
-      series:[ { name:"營業利益", type:"column", color:tok("--bar"), data:OP.map(T) }, { name:"淨利", type:"column", color:"#7f8c9a", data:NI.map(T) } ]
-    });
-  }
   /* ---------- 圖六：三率 ---------- */
   function pc(a){ return a.map(function(v,i){ return +((v/REV[i])*100).toFixed(1); }); }
   function build6(){
@@ -447,7 +433,7 @@ table.cmp.sum tr.gs:not(:first-child) td{ border-top:1px solid var(--muted) }
 
   function build(){
     build1(); build2();
-    build5(); build6(); build7(); build9(); build11b(); build12(); build13(); build14(); build16();
+    build6(); build7(); build9(); build11b(); build12(); build13(); build14(); build16();
   }
   Highcharts.setOptions({ lang:{ rangeSelectorZoom:"Zoom", thousandsSep:"," } });
   build();
