@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="SK 海力士 (000660.KS) 營收、ASP 與位元出貨、三率、存貨與費用、供需、HBM 市占、股東回報與現金流圖表">
+<title>海力士營收趨勢</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap">
+</head>
+<body>
+<style>
+:root{
+  --bg:#f5f7f9; --card:#ffffff; --fg:#2b3340; --muted:#6b7684; --line:#e3e7ec; --grid:#e6e6e6;
+  --bar:#E67E22; --bar-est:#F5C28F; --yoy:#FF3333; --qoq:#2E86DE;
+  --font:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){ --bg:#141a21; --card:#1c242d; --fg:#e6ebf0; --muted:#9aa5b1; --line:#2c3640; --grid:#2c3640; --bar-est:#a8794a; color-scheme:dark }
+}
+:root[data-theme="dark"]{ --bg:#141a21; --card:#1c242d; --fg:#e6ebf0; --muted:#9aa5b1; --line:#2c3640; --grid:#2c3640; --bar-est:#a8794a; color-scheme:dark }
+body{ background:var(--bg); color:var(--fg); font-family:var(--font); padding-block:24px; padding-inline:16px; margin:0 }
+.wrap{ max-width:940px; margin:0 auto; display:flex; flex-direction:column; gap:14px }
+h1{ font-size:22px; font-weight:700; margin:0; text-wrap:balance }
+h1 .tk{ color:var(--muted); font-weight:500; font-size:16px; margin-left:6px }
+h2{ font-size:18px; font-weight:700; margin:18px 0 0; text-wrap:balance }
+.meta{ color:var(--muted); font-size:13px; margin:0 }
+.card{ background:var(--card); border:1px solid var(--line); border-radius:8px; padding:12px 8px 6px; min-width:0 }
+.note{ color:var(--muted); font-size:12.5px; line-height:1.6; margin:0; padding-inline:4px }
+.note b{ color:var(--fg); font-weight:500 }
+.duo{ display:grid; grid-template-columns:1fr 1fr; gap:14px }
+.duo > .card{ min-width:0; position:relative }
+.duo > .col{ min-width:0; display:flex; flex-direction:column; gap:8px }
+.c{ width:100%; height:400px }
+.c.s{ height:360px } .c.l{ height:440px } .c.xl{ height:480px }
+table.cmp{ width:100%; border-collapse:collapse; font-size:13px; line-height:1.55 }
+table.cmp th, table.cmp td{ border-bottom:1px solid var(--line); padding:8px 8px; text-align:left; vertical-align:top }
+table.cmp th{ color:var(--muted); font-weight:500; font-size:12px; white-space:nowrap }
+table.cmp td:first-child{ font-weight:700; white-space:nowrap }
+.tblwrap{ overflow-x:auto; padding:4px 4px 2px }
+.tt{ font-size:15px; font-weight:700; text-align:center; padding:4px 6px 8px }
+table.cmp.sum th, table.cmp.sum td{ text-align:center; vertical-align:middle; font-weight:400; white-space:normal }
+table.cmp.sum{ table-layout:fixed }
+table.cmp.sum td.lbl{ text-align:left; font-weight:500 }
+table.cmp.sum td.grp{ font-weight:700; background:var(--bg); border-left:3px solid var(--bar); border-right:1px solid var(--line); color:var(--fg) }
+table.cmp.sum td.grp.ga{ border-left-color:#E67E22 }
+table.cmp.sum td.grp.gb{ border-left-color:#8E44AD }
+table.cmp.sum tr.hl td:not(.grp){ background:rgba(230,126,34,0.09) }
+table.cmp.sum tr.gs:not(:first-child) td{ border-top:1px solid var(--muted) }
+@media (max-width:760px){ .duo{ grid-template-columns:1fr } }
+@media (max-width:480px){ .c.xl{ height:420px } h1{ font-size:19px } }
+</style>
+
+<div class="wrap">
+  <h1>海力士-營收趨勢<span class="tk">SK hynix (000660.KS)</span></h1>
+  <p class="meta">季度營收（兆韓元）、年增率與季增率。點圖例可開關各序列；上方 All / 5y / 10y 切換區間。</p>
+  <div class="card"><div id="chart" class="c xl"></div></div>
+  <p class="note">[註1]：匯率來自美國聯準會 H.10 的每日美元對韓元匯率，取該季所有交易日的平均。韓元/美元匯率 26Q2 1500.5 , 26Q3 1417.2，韓元對美元升值約 5.9%（匯率下降 5.6%）。</p>
+
+  <h2>DRAM/NAND 價格季增：海力士 ASP vs TrendForce 合約價</h2>
+  <div class="card"><div id="chart2" class="c l"></div></div>
+  <p class="note">[註1]: 海力士 ASP 為法說會口述區間取中位數（例：mid-60s% → 65%）；TrendForce 為一般型 DRAM／整體 NAND 合約價最新版區間中位數，26Q4 為預測值。</p>
+  <div class="card"><div class="tt">26Q3 海力士 vs 行業</div><div class="tblwrap">
+    <table class="cmp sum">
+      <colgroup><col style="width:9%"><col style="width:31%"><col style="width:30%"><col style="width:30%"></colgroup>
+      <thead><tr><th colspan="2"></th><th>DRAM</th><th>NAND</th></tr></thead>
+      <tbody>
+        <tr class="gs"><td class="grp ga" rowspan="2">ASP</td><td class="lbl">ASP 季增：行業（TrendForce）</td><td>+13–18%</td><td>+10–15%</td></tr>
+        <tr class="ge hl"><td class="lbl">ASP 季增：海力士</td><td>+27%–29%</td><td>+24%–26%</td></tr>
+        <tr class="gs"><td class="grp gb" rowspan="4">Bit</td><td class="lbl">位元出貨（QoQ）：指引 → 實際</td><td>約 10% → 10%</td><td>1%–3% → -1%~-3%</td></tr>
+        <tr class="hl"><td class="lbl">26Q4 位元出貨指引（QoQ）</td><td>約 25%</td><td>約 5%</td></tr>
+        <tr><td class="lbl">2026 海力士位元出貨（YoY，推算）</td><td>約 31%</td><td>約 17%</td></tr>
+        <tr class="ge"><td class="lbl">2026、2027 行業位元出貨（YoY）</td><td>約 25%</td><td>約 18%</td></tr>
+      </tbody>
+    </table>
+  </div></div>
+  <p class="note">[註2]: 26Q3 ASP 上升原因——DRAM：HBM4 大量出貨，Server DDR5（出貨量 QoQ +40%）、LPDDR SOCAMM 等高價產品需求強勁；NAND：轉向 321 層高性能、大容量 eSSD，ASP 提升。</p>
+  <p class="note">[註3]: 26Q4 位元出貨增加來源——DRAM：年底前 M15X 工廠產能提升至最大水平，擴大 HBM4 生產，Q4 超越 HBM3E 成為主力產品；快速提升 1c 製程。NAND：321 層工藝提升至韓國本土產能 50%。</p>
+  <p class="note">[註4]: 26Q2 ASP 季增不及行業均值，主因 HBM4 尚未出貨，且 HBM3E 占比大、多為 2025 年簽訂的低價合約；26Q3 DRAM ASP 高個位數至 high-20s% 對照行業 +13–18%，NAND mid-20s% 對照行業 +10–15%（26Q3 法說會）。</p>
+
+  <h2>營業利益與淨利</h2>
+  <div class="card"><div id="chart5" class="c l"></div></div>
+  <p class="note">[註1]: 26Q3 營業利益 83.33 兆韓元（季增 +38%、年增 +632%），營業利益率 80% 創單季新高；淨利 39.78 兆韓元，淨利率 38%，業外損失 32.63 兆韓元，含匯兌損失 11.63 兆（韓元升值）與投資資產相關損失 22.92 兆（26Q3 簡報）。</p>
+  <p class="note">[註2]: 26Q2 淨利 93.92 兆韓元含約 63.27 兆韓元投資資產相關利益（市場解讀為鎧俠），與 26Q3 業外方向相反，淨利不宜直接比較，營業利益較能反映本業。</p>
+
+  <h2>毛利率、營業利益率與淨利率</h2>
+  <div class="card"><div id="chart6" class="c l"></div></div>
+  <p class="note">[註1]: 26Q3 毛利率 86%、營業利益率 80%，主因 ASP 上升與高附加價值產品銷售增加，且已吸收韓元升值的負面影響（26Q3 法說會）。</p>
+  <p class="note">[註2]: 淨利率（剔除匯兌與其他業外）＝（稅前利益 − 匯兌損益 − 其他業外損益）×（1 − 當季有效稅率）÷ 營收，有效稅率＝稅費 ÷ 稅前利益。匯兌損益與其他業外損益取自各季簡報損益表（Net F/X Transaction &amp; Translation P/L、Others），所有季度採同一標準。</p>
+  <p class="note">[註3]: 其他業外損益（含鎧俠評價損益）：26Q1 為利益 12.44 兆韓元、26Q2 為利益 60.89 兆韓元，26Q3 為損失 21.45 兆韓元。</p>
+
+  <h2>存貨與銷管費用</h2>
+  <div class="duo">
+    <div class="col">
+      <div class="card"><div id="chart7" class="c"></div></div>
+      <p class="note">[註]: 存貨天數＝期末存貨 ÷ 當季銷貨成本 × 91，為自行換算，非公司揭露口徑。</p>
+    </div>
+    <div class="col">
+      <div class="card"><div id="chart8" class="c"></div></div>
+      <p class="note">[註]: 26Q3 銷管費用 6.32 兆韓元，季增 +16%、年增 +139%；成本面壓力來自 CapEx 帶來的折舊與員工獎酬支出增加。</p>
+    </div>
+  </div>
+
+  <h2 style="text-align:center">需求仍大於供給：預期到 2030 年前供不應求</h2>
+
+  <h2>需求：量</h2>
+  <div class="duo">
+    <div class="col">
+      <div class="card"><div id="chart9" class="c s"></div></div>
+      <p class="note">[註]: 2027 年可實現需求位元成長 DRAM +mid-20% YoY、NAND +high-teen% YoY；全球 CSP CapEx 2027 年成長 60%+，AI 資料中心基礎建設市場至 2030 年 CAGR 約 40%（26Q3 法說會，市調機構估計）。</p>
+    </div>
+    <div class="col">
+      <div class="card"><div id="chart10" class="c s"></div></div>
+      <p class="note">[註]: 長期協議（LTA）客戶由約 10 家增至 14 家，含主要 CSP；標準 5 年期，部分客戶洽談延長；2027–28 年已鎖定產能超過總產能 50%，價格在客戶同意區間內，並有押金等履約保障（26Q3 法說會）。</p>
+    </div>
+  </div>
+
+  <h2>需求：價格與產品組合</h2>
+  <div class="card"><div class="tblwrap">
+    <table class="cmp">
+      <thead><tr><th>季度</th><th>現象</th><th>原因</th><th>法說會承諾／觀察</th></tr></thead>
+      <tbody>
+        <tr><td>26Q2</td><td>ASP 季增低於行業均值</td><td>HBM3E 合約價低且占比大；HBM4 等高價值產品出貨延遲</td><td>26H2 大量出貨</td></tr>
+        <tr><td>26Q3</td><td>ASP 季增大幅高於行業均值</td><td>HBM4 量產；DDR5 出貨位元數 QoQ 約 +40%（自有摘要）</td><td>DRAM ASP 高 20% 區段、NAND mid-20%</td></tr>
+        <tr><td>26Q4</td><td>HBM4 出貨與營收占比預期超越 HBM3E</td><td>M15X 年底前達滿載；1c 製程快速提升；DDR5 與 AI 伺服器用 LPDDR5 SOCAMM 銷售增加；NAND 321 層占韓國本土產能超過 50%</td><td>2027 年 HBM 談判已完成，與一般 DRAM 的獲利差距預期明顯縮小</td></tr>
+      </tbody>
+    </table>
+  </div></div>
+  <p class="note">[註]: 客戶提出的 HBM／DRAM 採購需求已談到 2029 年，HBM 需求量為目前供給的 2 倍以上，未來 HBM 價格預期趨近今年的一般 DRAM（自有摘要，26Q3 法說會）。質疑點：HBM4 由 12 層轉 8 層時，ASP 下降能否被每位元容量增加與 1c 提升抵消；CSP 為多出貨而增加顆數也未計入，暫列中性。</p>
+
+  <h2>供給：加項（CapEx 與新產能）</h2>
+  <div class="card"><div id="chart11" class="c l"></div></div>
+  <p class="note">[註1]: 2026 年 CapEx 指引為 high 40T KRW range（26Q2 法說會，M15X 量產提前、龍仁 Fab 1 於 2027 年初擴產）；2027 年預期較 2026 年大幅增加，用於先進製程與 Y1 擴產，並加速韓國與海外基礎建設（26Q3 法說會）。</p>
+  <p class="note">[註2]: 圖中為現金流量表「購置不動產、廠房及設備」，與公司 CapEx 指引口徑可能不同；2026 年前三季合計 31.0 兆韓元。</p>
+  <p class="note">[註3]: 觀察重點：26Q4 起產能大幅增加，擴產速度是否與行業一致，或出現加速擴產跡象；短期有利營收，但破壞行業紀律，未來可能導致周期反轉。美光與海力士目前都承諾 2027 年繼續增加資本支出（自有摘要）。</p>
+
+  <h2>技術路線：6F² 用到極限，再轉 4F² 或 3D DRAM</h2>
+  <p class="note">[註1]: 目前量產使用 6F²，是綜合良率與成本結構、量產可靠度、客戶認證後的選擇，不只看單位面積更小、密度更高這一個維度（26Q3 法說會）。</p>
+  <p class="note">[註2]: 公司正準備分階段路線圖，涵蓋現有 DRAM 的極限微縮，到 4F² 與 3D DRAM，技術與經濟條件到位後再轉換；與美光表態完全不考慮 4F² 不同。技術開發完成與商業化是兩個時點（自有摘要）。</p>
+
+  <h2>預期差：實際 vs 賣方共識</h2>
+  <div class="card"><div id="chart12" class="c l"></div></div>
+  <p class="note">[註1]: 共識來源：25Q1–25Q2 為 LSEG；26Q1 為 Newsquawk；26Q2 與 26Q3 為 FnGuide（26Q3 共識營收 98.23 兆、營業利益 76.96 兆，10/26 引用）；25Q4 各媒體口徑不同，取區間中值；25Q3 未找到可靠共識。</p>
+  <p class="note">[註2]: 26Q2 低於共識約 5.5%（HBM4 出貨低於預期、高附加價值產品遞延、混合 ASP 受組合影響）；26Q3 營收超出約 6.5%、營業利益超出約 8.3%，且是在韓元大幅升值的不利下達成，若加回匯率影響營收約 115 兆韓元（自有摘要）。</p>
+
+  <h2>三家 HBM 市佔率比較</h2>
+  <div class="card"><div id="chart13" class="c l"></div></div>
+  <p class="note">資料：Counterpoint，營收口徑，經韓國媒體引述；3Q25 與 2Q25 美光市占為 100% 減另兩家推得。2Q25 曾以出貨量口徑公布為 62/17/21，此處統一用營收口徑。</p>
+
+  <h2>股東回報</h2>
+  <div class="duo">
+    <div class="col">
+      <div class="card"><div id="chart14" class="c s"></div></div>
+      <p class="note">[註1]: 2026 年（Q2+Q3）合計約 100 兆韓元，相當於 26Q3 單季營收；現金分紅 30 兆+（Q3 約 14 兆，其中 7 兆為鎧俠投資特別分紅）；庫藏股回購與註銷 60 兆+（8 月 40 兆已完成、即將註銷；Q3 回購 20 兆，其中 10 兆註銷、10 兆為員工績效獎金）（自有摘要）。</p>
+    </div>
+    <div class="col">
+      <div class="card"><div id="chart15" class="c s"></div></div>
+      <p class="note">[註2]: Q3 股利每股約 20,000 韓元＝獲利基準 10,000 ＋特別股利 10,000；配息基準日 2026-11-30，預計 12 月發放。政策為每股固定 1,500 韓元，另在達成財務目標後回饋 3 年（FY25–27）累計自由現金流 50% 以上；員工與高管獎酬用的買回不計入股東回報（26Q3 簡報）。</p>
+    </div>
+  </div>
+  <p class="note">[註3]: 100 兆韓元全數回購約占市值多少、股數減少多少，尚待計算；回購註銷使股數減少、EPS 提升，為每股盈餘的助力（自有摘要，待補數字）。</p>
+
+  <h2>現金流與淨現金</h2>
+  <div class="duo">
+    <div class="card"><div id="chart16" class="c"></div></div>
+    <div class="card"><div id="chart17" class="c"></div></div>
+  </div>
+  <p class="note">[註1]: 26Q3 營業現金流 54.78 兆韓元，低於 26Q2 的 65.71 兆；投資現金流 −42.89 兆，其中長期金融投資轉出 30.85 兆，並非資本支出；籌資現金流轉為流入 10.78 兆，主要來自庫藏股處分等 10.31 兆（26Q3 簡報）。</p>
+  <p class="note">[註2]: 淨現金＝現金及短期金融商品 − 附息負債；26Q3 現金 114.46 兆、附息負債 15.80 兆，淨負債比 −32%（26Q3 簡報）。自由現金流＝營業現金流 − 購置不動產、廠房及設備，為自行換算。</p>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/11.4.8/highstock.js"></script>
+<script>
+(function(){
+  /* ===== 季度資料（十億韓元；K-IFRS 合併，來源：各季業績簡報 Income Statement／Financial Position／Cash Flow） ===== */
+  var Q=["23Q1","23Q2","23Q3","23Q4","24Q1","24Q2","24Q3","24Q4","25Q1","25Q2","25Q3","25Q4","26Q1","26Q2","26Q3"];
+  var REV=[5088,7306,9066,11306,12430,16423,17573,19767,17639,22232,24449,32827,52576,79319,104615];
+  var GP =[-1645,-1178,64,2226,4795,7496,9171,10366,10102,11983,14029,22576,41679,65991,89653];
+  var OP =[-3402,-2882,-1792,346,2886,5469,7030,8083,7441,9213,11383,19170,37610,60543,83334];
+  var EBD=[154,612,1541,3582,6073,8591,10100,11249,10769,12645,14949,22732,41336,64563,87675];
+  var NI =[-2585,-2988,-2185,-1379,1917,4120,5753,8006,8108,6996,12598,15246,40346,93923,39776];
+  var COGS=[6733,8484,9002,9080,7635,8927,8402,9401,7537,10249,10420,10250,10897,13327,14963];
+  var SGA=[1757,1704,1856,1880,1909,2028,2141,2283,2661,2770,2646,3407,4069,5449,6319];
+  var INV=[17182,16420,14948,13481,13845,13355,13354,13314,14551,13408,13156,14289,15974,17986,19356];
+  var CASH=[6136,7491,8531,8921,10319,9688,10858,14156,14311,16962,27854,34942,54330,87958,114460];
+  var DEBT=[28758,30807,31559,29469,29506,25228,21845,22684,23334,21841,24079,22248,19318,18587,15800];
+  var CFO=[-1982,1341,1029,3969,5385,5697,7804,11081,9075,9208,14368,20939,26430,65710,54781];
+  // 稅前利益、稅費、匯兌損益（Net F/X Transaction & Translation P/L）、其他業外損益（Others）：各季簡報損益表
+  var PRE=[-3525,-3788,-2470,-1875,2373,5052,6879,9581,9299,8723,14790,17653,51617,122708,50708];
+  var TAXE=[-940,-800,-285,-495,456,932,1126,1575,1191,1726,2193,2407,11271,28786,10933];
+  var FXL=[99,-517,-159,258,-215,-159,18,625,122,-613,209,-166,1573,1147,-11633];
+  var OTHN=[28,-72,-187,-2141,17,17,57,1071,1930,234,3324,-1258,12438,60889,-21452];
+  var CPX=[3199,1934,1520,1728,3103,2079,3516,7248,6284,4332,5033,11871,7657,10671,12670];
+  // 依產品別營收占比（KRW，含 Solidigm）：23Q1–26Q1 取自估值模型 SKH_USD_M.xlsx「Segment」分頁（讀自各季簡報堆疊圖）；26Q2、26Q3 取自 26Q3 簡報。占比為四捨五入整數，故拆分金額為近似值
+  var MIX_DRAM=[.58,.62,.67,.65,.61,.66,.69,.74,.80,.77,.78,.76,.78,.73,.75];
+  var MIX_NAND=[.33,.30,.27,.29,.35,.31,.28,.24,.18,.21,.20,.23,.21,.27,.24];
+  // 各季平均美元對韓元匯率（韓元／美元）：美國聯準會 H.10 每日匯率（FRED DEXKOUS）各季所有交易日簡單平均；key 為季初月份
+  var FX={"2022-01":1206.2,"2022-04":1260.5,"2022-07":1341.1,"2022-10":1359.4,"2023-01":1276.3,"2023-04":1315.7,"2023-07":1313.2,"2023-10":1321.8,"2024-01":1329.6,"2024-04":1370.1,"2024-07":1355.5,"2024-10":1398.7,"2025-01":1452.0,"2025-04":1399.8,"2025-07":1386.9,"2025-10":1448.8,"2026-01":1465.6,"2026-04":1500.5,"2026-07":1417.2};
+  // 2022 年四季營收：取自 2023 年各季簡報的去年同季欄，只用來算 23 年的年增／季增
+  var REV22=[["2022-01",12156],["2022-04",13811],["2022-07",10983],["2022-10",7672]];
+
+  function T(n){ return +(n/1000).toFixed(2); }
+  function tok(n){ return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+  function fmtP(v){ return v==null?"—":(v>0?"+":"")+Highcharts.numberFormat(v,1)+"%"; }
+  function fmtT(v){ return v==null?"—":Highcharts.numberFormat(v,2); }
+  function ts(k){ return Date.UTC(+k.slice(0,4), +k.slice(5,7)-1, 1); }
+  function shift(k,m){ var y=+k.slice(0,4), mo=+k.slice(5,7)+m; while(mo<1){mo+=12;y--;} while(mo>12){mo-=12;y++;} return y+"-"+(mo<10?"0":"")+mo; }
+  function qKey(q){ return "20"+q.slice(0,2)+"-"+["01","04","07","10"][+q[3]-1]; }
+  function qLabel(x){ var d=new Date(x); return d.getUTCFullYear()+" Q"+(Math.floor(d.getUTCMonth()/3)+1); }
+
+  var charts={};
+  function mk(id,title,o){
+    var fg=tok("--fg"), muted=tok("--muted"), grid=tok("--grid"), card=tok("--card"), font=tok("--font");
+    var b={
+      chart:{ backgroundColor:card, style:{fontFamily:font}, spacing:[10,14,8,8] }, credits:{enabled:false},
+      title:{ text:title, style:{color:fg,fontSize:"15px",fontWeight:"700"} },
+      legend:{ enabled:true, align:"center", verticalAlign:"bottom", itemStyle:{color:fg,fontSize:"12px",fontWeight:"400"}, itemHiddenStyle:{color:"#9aa5b1"}, itemHoverStyle:{color:fg} },
+      tooltip:{ shared:true, useHTML:true, backgroundColor:card, borderColor:grid, style:{color:fg,fontSize:"12px"} },
+      plotOptions:{ series:{ states:{inactive:{opacity:1}} }, column:{ borderWidth:0, pointPadding:0.12, groupPadding:0.1 },
+        line:{ lineWidth:2, marker:{enabled:true,radius:3.5,symbol:"circle"} } }
+    };
+    charts[id] && charts[id].destroy();
+    charts[id]=Highcharts.chart(id, Highcharts.merge(b,o));
+    return charts[id];
+  }
+  function ax(cats,extra){ return Highcharts.merge({ categories:cats, lineColor:tok("--grid"), tickColor:tok("--grid"), labels:{style:{color:tok("--muted"),fontSize:"11px"}} },extra||{}); }
+  function ay(title,extra){ return Highcharts.merge({ title:{text:title,style:{color:tok("--muted"),fontSize:"11px"}}, gridLineColor:tok("--grid"), labels:{style:{color:tok("--muted"),fontSize:"11px"}} },extra||{}); }
+  function tip(fmt,tail){ return { formatter:function(){ var s="<b>"+this.x+"</b>";
+    this.points.forEach(function(p){ s+='<br><span style="color:'+p.color+'">●</span> '+p.series.name+": <b>"+fmt(p)+"</b>"; });
+    return s+(tail?tail(this):""); } }; }
+  function pts(arr){ return arr.map(function(p){ return p==null?{y:null}:{y:p[1],txt:p[0]}; }); }
+
+  /* ---------- 圖一：營收趨勢（stock，柱＋年增／季增） ---------- */
+  function build1(){
+    var fg=tok("--fg"), muted=tok("--muted"), grid=tok("--grid"), card=tok("--card"), font=tok("--font");
+    var RAW=REV22.concat(Q.map(function(q,i){ return [qKey(q),REV[i]]; }));
+    var map={}; RAW.forEach(function(p){ map[p[0]]=p[1]; });
+    function growth(back){ return RAW.map(function(p){ var b=map[shift(p[0],-back)]; return [ts(p[0]), b==null?null:+((p[1]/b-1)*100).toFixed(2)]; }); }
+    var QQ=92*864e5, T0=ts("2023-01");
+    function from23(a){ return a.filter(function(p){ return p[0]>=T0; }); }
+    function part(share){ return Q.map(function(q,i){ return [ts(qKey(q)), T(REV[i]*share[i])]; }); }
+    // 回補匯率（只算最新一季）：營收 × 上季平均匯率 ÷ 本季平均匯率
+    var L=Q.length-1, kL=qKey(Q[L]), tL=ts(kL);
+    var adjRev=[[tL, T(REV[L]*FX[shift(kL,-3)]/FX[kL])]];
+    var OTH=MIX_DRAM.map(function(d,i){ return Math.max(0,+(1-d-MIX_NAND[i]).toFixed(2)); });
+    charts.chart && charts.chart.destroy();
+    charts.chart=Highcharts.stockChart("chart",{
+      chart:{ backgroundColor:card, style:{fontFamily:font}, spacing:[10,16,8,8] },
+      title:{ text:"海力士-營收趨勢", style:{color:fg,fontSize:"15px",fontWeight:"700"} },
+      subtitle:{ text:"SK hynix 季度業績簡報（含 Solidigm）", style:{color:muted,fontSize:"11px"} },
+      credits:{enabled:false}, navigator:{enabled:false}, scrollbar:{enabled:false},
+      rangeSelector:{ selected:0, inputEnabled:false,
+        buttons:[{type:"all",text:"All"},{type:"year",count:1,text:"1y"},{type:"year",count:2,text:"2y"},{type:"year",count:3,text:"3y"}],
+        buttonTheme:{ fill:"none", stroke:"none", r:4, style:{color:muted,fontSize:"12px"}, states:{ hover:{fill:grid,style:{color:fg}}, select:{fill:"#3bbd8f",style:{color:"#fff",fontWeight:"500"}} } },
+        labelStyle:{color:muted,fontSize:"12px"} },
+      legend:{ enabled:true, align:"center", verticalAlign:"bottom", itemStyle:{color:fg,fontSize:"12px",fontWeight:"400"}, itemHiddenStyle:{color:"#9aa5b1"}, itemHoverStyle:{color:fg} },
+      xAxis:{ type:"datetime", lineColor:grid, tickColor:grid, labels:{style:{color:muted,fontSize:"11px"}}, ordinal:false, minRange:180*864e5, max:ts("2026-07")+45*864e5,
+        units:[["month",[3,6]],["year",[1,2]]], dateTimeLabelFormats:{month:"%b %Y",year:"%Y"} },
+      yAxis:[
+        { title:{text:"Percent",style:{color:muted,fontSize:"11px"}}, opposite:false, gridLineColor:grid, showLastLabel:true, labels:{align:"right",x:-6,style:{color:muted,fontSize:"11px"},format:"{value}%"} },
+        { title:{text:"兆韓元",style:{color:muted,fontSize:"11px"}}, opposite:true, gridLineWidth:0, min:0, showLastLabel:true, labels:{align:"left",x:6,style:{color:muted,fontSize:"11px"}} }
+      ],
+      tooltip:{ shared:true, split:false, useHTML:true, backgroundColor:card, borderColor:grid, style:{color:fg,fontSize:"12px"},
+        formatter:function(){ var s="<b>"+qLabel(this.x)+"</b>";
+          var d=new Date(this.x), i=Q.indexOf(String(d.getUTCFullYear()).slice(2)+"Q"+(Math.floor(d.getUTCMonth()/3)+1));
+          this.points.forEach(function(p){ var isCol=p.series.options.yAxis===1, isAdj=p.series.options.id==="fxAdj";
+            var v=isAdj?fmtT(p.y)+" 兆":isCol?(i>=0?Math.round(p.y/(REV[i]/1000)*100)+"%":"—"):fmtP(p.y);
+            s+='<br><span style="color:'+p.color+'">●</span> '+p.series.name+": <b>"+v+"</b>"; });
+          if(i>=0) s+="<br>總營收：<b>"+fmtT(REV[i]/1000)+" 兆</b>";
+          return s; } },
+      plotOptions:{ column:{ grouping:false, stacking:"normal", borderWidth:0, pointRange:QQ, pointPadding:0.18, groupPadding:0, dataGrouping:{enabled:false} },
+        line:{ lineWidth:2, marker:{enabled:false}, dataGrouping:{enabled:false} }, series:{ showInNavigator:false, states:{inactive:{opacity:1}} } },
+      series:[
+        { name:"其他(R)", type:"column", color:"#9aa5b1", data:part(OTH), yAxis:1, index:2, legendIndex:4 },
+        { name:"NAND 營收(R)", type:"column", color:"#16A085", data:part(MIX_NAND), yAxis:1, index:1, legendIndex:3 },
+        { name:"DRAM 營收(R)", type:"column", color:tok("--bar"), data:part(MIX_DRAM), yAxis:1, index:0, legendIndex:2 },
+        { name:"總營收年增率(L)", type:"line", color:tok("--yoy"), data:from23(growth(12)), yAxis:0, index:3, legendIndex:0 },
+        { name:"總營收季增率(L)", type:"line", color:tok("--qoq"), data:from23(growth(3)), yAxis:0, index:4, legendIndex:1 },
+        { id:"fxAdj", name:"回補匯率", type:"column", color:"transparent", borderColor:tok("--fg"), borderWidth:1.5, dashStyle:"ShortDash", grouping:false, stack:"adj",
+          data:adjRev, yAxis:1, index:5, legendIndex:5, visible:false, zIndex:5, tooltip:{} }
+      ]
+    });
+  }
+
+  /* ---------- 圖二：ASP vs TrendForce ---------- */
+  var QS=["25Q1","25Q2","25Q3","25Q4","26Q1","26Q2","26Q3","26Q4E"];
+  var TF_DRAM=[["-8~13%",-10.5],["-0~5%",-2.5],["+10~15%",12.5],["+45~50%",47.5],["+90~95%",92.5],["+58~63%",60.5],["+13~18%",15.5],["+10~15%",12.5]];
+  var TF_NAND=[["-10~15%",-12.5],["+3~8%",5.5],["+5~10%",7.5],["+20~25%",22.5],["+85~90%",87.5],["+70~75%",72.5],["+10~15%",12.5],["+15~20%",17.5]];
+  var SK_DRAM=[["flat",0],["low-single ↑",3],["mid-single ↑",5],["mid-20s% ↑",25],["mid-60s% ↑",65],["≈30% ↑",30],["high-20s% ↑",28],null];
+  var SK_NAND=[["≈20% ↓",-20],["high-single ↓",-8],["low-teen ↑",12],["low-30s% ↑",32],["mid-70s% ↑",75],["mid-50s% ↑",55],["mid-20s% ↑",25],null];
+  function build2(){
+    var bar=tok("--bar"), red=tok("--yoy");
+    mk("chart2","Trendforce vs. SK hynix",{
+      xAxis:ax(QS,{ plotBands:[{from:5.5,to:6.5,color:"rgba(230,126,34,0.09)"}] }),
+      yAxis:ay("Percent (QoQ)",{ labels:{style:{color:tok("--muted"),fontSize:"11px"},format:"{value}%"}, plotLines:[{value:0,color:tok("--muted"),width:1,zIndex:2}] }),
+      tooltip:tip(function(p){ return fmtP(p.y)+(p.point.txt?"（"+p.point.txt+"）":""); }),
+      plotOptions:{ series:{ connectNulls:false, marker:{radius:4} } },
+      legend:{ labelFormatter:function(){ return this.options.legendName||this.name; } },
+      series:[
+        { id:"dram", name:"TrendForce DRAM 合約價", legendName:"DRAM（TrendForce 合約價＋海力士 ASP）", color:"#2E86DE", data:pts(TF_DRAM) },
+        { name:"海力士 DRAM ASP", linkedTo:"dram", color:bar, dashStyle:"ShortDash", marker:{symbol:"square"}, data:pts(SK_DRAM) },
+        { id:"nand", name:"TrendForce NAND 合約價", legendName:"NAND（TrendForce 合約價＋海力士 ASP）", color:"#16A085", data:pts(TF_NAND) },
+        { name:"海力士 NAND ASP", linkedTo:"nand", color:red, dashStyle:"ShortDash", marker:{symbol:"square"}, data:pts(SK_NAND) }
+      ]
+    });
+  }
+
+
+  /* ---------- 圖五：營業利益與淨利 ---------- */
+  function build5(){
+    mk("chart5","營業利益與淨利（兆韓元）",{
+      xAxis:ax(Q), yAxis:ay("兆韓元",{ plotLines:[{value:0,color:tok("--muted"),width:1,zIndex:3}] }),
+      tooltip:tip(function(p){ return fmtT(p.y)+" 兆"; }),
+      plotOptions:{ column:{ pointPadding:0.06, groupPadding:0.12 } },
+      series:[ { name:"營業利益", type:"column", color:tok("--bar"), data:OP.map(T) }, { name:"淨利", type:"column", color:"#7f8c9a", data:NI.map(T) } ]
+    });
+  }
+  /* ---------- 圖六：三率 ---------- */
+  function pc(a){ return a.map(function(v,i){ return +((v/REV[i])*100).toFixed(1); }); }
+  function build6(){
+    var fg=tok("--fg"), muted=tok("--muted"), grid=tok("--grid"), card=tok("--card"), font=tok("--font");
+    function ser(arr){ return Q.map(function(q,i){ return [ts(qKey(q)), arr[i]]; }); }
+    var adjNI=NI.map(function(v,i){ var r=TAXE[i]/PRE[i]; if(!(r>=0&&r<=0.35)) r=0; return (PRE[i]-FXL[i]-OTHN[i])*(1-r); });
+    charts.chart6 && charts.chart6.destroy();
+    charts.chart6=Highcharts.stockChart("chart6",{
+      chart:{ backgroundColor:card, style:{fontFamily:font}, spacing:[10,16,8,8] },
+      title:{ text:"毛利率、營業利益率與淨利率", style:{color:fg,fontSize:"15px",fontWeight:"700"} },
+      credits:{enabled:false}, navigator:{enabled:false}, scrollbar:{enabled:false},
+      rangeSelector:{ selected:0, inputEnabled:false,
+        buttons:[{type:"all",text:"All"},{type:"year",count:1,text:"1y"},{type:"year",count:2,text:"2y"},{type:"year",count:3,text:"3y"}],
+        buttonTheme:{ fill:"none", stroke:"none", r:4, style:{color:muted,fontSize:"12px"}, states:{ hover:{fill:grid,style:{color:fg}}, select:{fill:"#3bbd8f",style:{color:"#fff",fontWeight:"500"}} } },
+        labelStyle:{color:muted,fontSize:"12px"} },
+      legend:{ enabled:true, align:"center", verticalAlign:"bottom", itemStyle:{color:fg,fontSize:"12px",fontWeight:"400"}, itemHiddenStyle:{color:"#9aa5b1"}, itemHoverStyle:{color:fg} },
+      xAxis:{ type:"datetime", lineColor:grid, tickColor:grid, labels:{style:{color:muted,fontSize:"11px"}}, ordinal:false, minRange:180*864e5,
+        max:ts("2026-07")+45*864e5, units:[["month",[3,6]],["year",[1,2]]], dateTimeLabelFormats:{month:"%b %Y",year:"%Y"} },
+      yAxis:{ title:{text:"Percent",style:{color:muted,fontSize:"11px"}}, gridLineColor:grid, max:125, tickInterval:25, opposite:false,
+        labels:{style:{color:muted,fontSize:"11px"},format:"{value}%"}, plotLines:[{value:0,color:muted,width:1,zIndex:2}] },
+      tooltip:{ shared:true, split:false, useHTML:true, backgroundColor:card, borderColor:grid, style:{color:fg,fontSize:"12px"},
+        formatter:function(){ var s="<b>"+qLabel(this.x)+"</b>";
+          this.points.forEach(function(p){ s+='<br><span style="color:'+p.color+'">●</span> '+p.series.name+": <b>"+p.y.toFixed(1)+"%</b>"; });
+          return s; } },
+      plotOptions:{ line:{ lineWidth:2, marker:{enabled:true,radius:3.5,symbol:"circle"}, dataGrouping:{enabled:false} }, series:{ showInNavigator:false, states:{inactive:{opacity:1}} } },
+      series:[
+        { name:"毛利率", type:"line", color:"#2E86DE", data:ser(pc(GP)) },
+        { name:"營業利益率", type:"line", color:"#F39C12", data:ser(pc(OP)) },
+        { name:"淨利率（剔除匯兌與其他業外）", type:"line", color:"#E74C3C", data:ser(pc(adjNI)) },
+        { name:"淨利率", type:"line", color:"#E74C3C", dashStyle:"ShortDash", marker:{symbol:"diamond",radius:3}, data:ser(pc(NI)) }
+      ]
+    });
+  }
+  /* ---------- 圖七／八：存貨與銷管 ---------- */
+  function build7(){
+    var dio=INV.map(function(v,i){ return Math.round(v/COGS[i]*91); });
+    mk("chart7","存貨金額與存貨天數",{
+      xAxis:ax(Q), yAxis:[ ay("兆韓元",{min:0}), ay("Days",{ opposite:true, gridLineWidth:0, min:0 }) ],
+      tooltip:tip(function(p){ return p.series.options.yAxis===1?p.y+" 天":fmtT(p.y)+" 兆"; }),
+      series:[ { name:"期末存貨(L)", type:"column", color:tok("--bar"), yAxis:0, data:INV.map(T) }, { name:"存貨天數(R)", type:"line", color:tok("--yoy"), yAxis:1, data:dio } ]
+    });
+    var rt=SGA.map(function(v,i){ return +(v/REV[i]*100).toFixed(1); });
+    mk("chart8","銷管費用與費用率",{
+      xAxis:ax(Q), yAxis:[ ay("兆韓元",{min:0}), ay("占營收",{ opposite:true, gridLineWidth:0, min:0, labels:{style:{color:tok("--muted"),fontSize:"11px"},format:"{value}%"} }) ],
+      tooltip:tip(function(p){ return p.series.options.yAxis===1?p.y+"%":fmtT(p.y)+" 兆"; }),
+      series:[ { name:"銷管費用(L)", type:"column", color:tok("--bar"), yAxis:0, data:SGA.map(T) }, { name:"占營收(R)", type:"line", color:tok("--qoq"), yAxis:1, data:rt } ]
+    });
+  }
+  /* ---------- 圖九／十：需求 ---------- */
+  function build9(){
+    mk("chart9","產業可實現需求位元成長（YoY）",{
+      xAxis:ax(["2026（26Q2 法說會）","2027（26Q3 法說會）"]), yAxis:ay("Percent",{ min:0, max:40, labels:{style:{color:tok("--muted"),fontSize:"11px"},format:"{value}%"} }),
+      tooltip:{ formatter:function(){ var s="<b>"+this.x+"</b>"; this.points.forEach(function(p){ s+='<br><span style="color:'+p.color+'">●</span> '+p.series.name+": <b>"+p.point.txt+"</b>"; }); return s; } },
+      plotOptions:{ column:{ pointPadding:0.06, groupPadding:0.2 }, series:{ dataLabels:{ enabled:true, formatter:function(){ return this.point.txt; }, style:{color:tok("--fg"),fontSize:"11px",fontWeight:"500",textOutline:"none"} } } },
+      series:[ { name:"DRAM", type:"column", color:"#2E86DE", data:[{y:25,txt:"+mid-20%"},{y:25,txt:"+mid-20%"}] },
+               { name:"NAND", type:"column", color:"#16A085", data:[{y:18,txt:"+high-teen%"},{y:18,txt:"+high-teen%"}] } ]
+    });
+    mk("chart10","長期協議（LTA）客戶數",{
+      xAxis:ax(["26Q2 法說會","26Q3 法說會"]), yAxis:ay("家",{ min:0, max:16, tickInterval:4 }),
+      legend:{enabled:false},
+      tooltip:{ formatter:function(){ return "<b>"+this.x+"</b><br>簽約客戶：<b>"+this.points[0].point.txt+"</b>"; } },
+      plotOptions:{ series:{ dataLabels:{ enabled:true, formatter:function(){ return this.point.txt; }, style:{color:tok("--fg"),fontSize:"11px",fontWeight:"500",textOutline:"none"} } } },
+      series:[ { name:"LTA 客戶數", type:"column", color:tok("--bar"), data:[{y:10,txt:"約 10 家"},{y:14,txt:"14 家"}] } ]
+    });
+  }
+  /* ---------- 圖十一：CapEx ---------- */
+  function build11b(){
+    var cum=[]; CPX.forEach(function(v,i){ var q=+Q[i][3]; cum.push(q===1?v:cum[i-1]+v); });
+    var pr=CPX.map(function(v,i){ return i<4?null:+(v/CPX[i-4]*100-100).toFixed(0); });
+    mk("chart11","購置不動產、廠房及設備（季度，兆韓元）",{
+      xAxis:ax(Q), yAxis:[ ay("兆韓元",{min:0}), ay("YoY",{ opposite:true, gridLineWidth:0, labels:{style:{color:tok("--muted"),fontSize:"11px"},format:"{value}%"} }) ],
+      tooltip:tip(function(p){ return p.series.options.yAxis===1?fmtP(p.y):fmtT(p.y)+" 兆"; },function(t){ var i=Q.indexOf(t.x); return "<br>當年累計：<b>"+fmtT(cum[i]/1000)+" 兆</b>"; }),
+      series:[ { name:"季度購置(L)", type:"column", color:tok("--bar"), yAxis:0, data:CPX.map(T) }, { name:"年增率(R)", type:"line", color:tok("--yoy"), yAxis:1, data:pr } ]
+    });
+  }
+  /* ---------- 圖十二：預期差 ---------- */
+  function build12(){
+    var C=["25Q1","25Q2","25Q3","25Q4","26Q1","26Q2","26Q3"];
+    mk("chart12","實際 vs 賣方共識（差異 %）",{
+      xAxis:ax(C), yAxis:ay("Percent",{ labels:{style:{color:tok("--muted"),fontSize:"11px"},format:"{value}%"}, plotLines:[{value:0,color:tok("--muted"),width:1,zIndex:3}] }),
+      tooltip:tip(function(p){ return p.y==null?"—":fmtP(p.y); },function(t){ return t.x==="25Q3"?"<br>未找到可靠共識":(t.x==="25Q4"?"<br>共識為媒體區間中值":""); }),
+      plotOptions:{ column:{ pointPadding:0.06, groupPadding:0.14 }, series:{ dataLabels:{ enabled:true, formatter:function(){ return this.y==null?"":(this.y>0?"+":"")+this.y.toFixed(1); }, style:{color:tok("--fg"),fontSize:"10px",fontWeight:"500",textOutline:"none"} } } },
+      series:[ { name:"營收", type:"column", color:tok("--bar"), data:[2.2,8.1,null,4.1,-1.9,-5.5,6.5] },
+               { name:"營業利益", type:"column", color:"#2E86DE", data:[12.4,2.4,null,12.3,-0.8,-5.4,8.3] } ]
+    });
+  }
+  /* ---------- 圖十三：HBM 市占 ---------- */
+  function build13(){
+    mk("chart13","HBM 營收市占率",{
+      chart:{type:"column"},
+      xAxis:ax(["1Q25","2Q25","3Q25","4Q25","1Q26","2Q26"]), yAxis:ay("Percent",{ min:0, max:80, tickInterval:20, labels:{style:{color:tok("--muted"),fontSize:"11px"},format:"{value}%"} }),
+      tooltip:tip(function(p){ return p.y+"%"; },function(t){ return (t.x==="2Q25"||t.x==="3Q25")?"<br>美光為 100% 減另兩家推得":""; }),
+      plotOptions:{ column:{ borderRadius:2, pointPadding:0.06, groupPadding:0.16 } },
+      series:[ { name:"SK 海力士", color:"#E67E22", data:[69,64,56,57,58,50] }, { name:"三星", color:"#2C4A8C", data:[13,15,23,22,21,33] }, { name:"美光", color:"#42A9E5", data:[18,21,21,21,21,18] } ]
+    });
+  }
+  /* ---------- 圖十四／十五：股東回報 ---------- */
+  function build14(){
+    mk("chart14","2026 年股東回報組成（兆韓元，約數）",{
+      chart:{type:"bar"},
+      xAxis:ax(["現金分紅","庫藏股"]), yAxis:ay("兆韓元",{ min:0, max:70, tickInterval:10, stackLabels:{enabled:false} }),
+      tooltip:{ formatter:function(){ return "<b>"+this.series.name+"</b><br>"+this.x+"："+this.y+" 兆+"; } },
+      plotOptions:{ series:{ stacking:"normal", dataLabels:{ enabled:true, formatter:function(){ return this.y?this.y+"+":""; }, style:{color:"#fff",fontSize:"11px",fontWeight:"500",textOutline:"none"} } }, bar:{ borderWidth:0, pointPadding:0.15 } },
+      series:[ { name:"Q3 員工獎酬用買回", color:"#8a94a3", data:[0,10] }, { name:"Q3 回購註銷", color:"#F39C12", data:[0,10] },
+               { name:"8 月回購（已完成，待註銷）", color:"#E67E22", data:[0,40] }, { name:"Q3 現金分紅", color:"#2E86DE", data:[14,0] }, { name:"其餘現金分紅", color:"#16A085", data:[16,0] } ]
+    });
+    mk("chart15","Q3 每股股利（韓元，約數）",{
+      xAxis:ax(["Q3 股利"]), yAxis:ay("KRW",{ min:0, max:22000, tickInterval:5000, labels:{style:{color:tok("--muted"),fontSize:"11px"},format:"{value:,.0f}"} }),
+      tooltip:{ formatter:function(){ return "<b>"+this.series.name+"</b>：約 "+Highcharts.numberFormat(this.y,0)+" 韓元"; } },
+      plotOptions:{ column:{ stacking:"normal", pointPadding:0.3 }, series:{ dataLabels:{ enabled:true, format:"{y:,.0f}", style:{color:"#fff",fontSize:"11px",fontWeight:"500",textOutline:"none"} } } },
+      series:[ { name:"特別股利（鎧俠實現利益）", type:"column", color:"#F39C12", data:[10000] }, { name:"獲利基準股利", type:"column", color:"#2E86DE", data:[10000] } ]
+    });
+  }
+  /* ---------- 圖十六／十七：現金流 ---------- */
+  function build16(){
+    var fcf=CFO.map(function(v,i){ return v-CPX[i]; });
+    mk("chart16","營業現金流、資本支出與自由現金流（兆韓元）",{
+      xAxis:ax(Q), yAxis:ay("兆韓元",{ plotLines:[{value:0,color:tok("--muted"),width:1,zIndex:3}] }),
+      tooltip:tip(function(p){ return fmtT(p.y)+" 兆"; }),
+      plotOptions:{ column:{ pointPadding:0.04, groupPadding:0.1 } },
+      series:[ { name:"營業現金流", type:"column", color:tok("--bar"), data:CFO.map(T) }, { name:"購置 PP&E", type:"column", color:tok("--bar-est"), data:CPX.map(T) }, { name:"自由現金流", type:"column", color:tok("--yoy"), data:fcf.map(T) } ]
+    });
+    mk("chart17","現金、附息負債與淨現金（兆韓元）",{
+      xAxis:ax(Q), yAxis:ay("兆韓元",{ min:0 }),
+      tooltip:tip(function(p){ return fmtT(p.y)+" 兆"; }),
+      plotOptions:{ column:{ pointPadding:0.06, groupPadding:0.12 } },
+      series:[ { name:"現金及短期金融商品", type:"column", color:"#2E86DE", data:CASH.map(T) }, { name:"附息負債", type:"column", color:"#8a94a3", data:DEBT.map(T) },
+               { name:"淨現金", type:"line", color:tok("--yoy"), data:CASH.map(function(v,i){ return T(v-DEBT[i]); }) } ]
+    });
+  }
+
+  function build(){
+    build1(); build2();
+    build5(); build6(); build7(); build9(); build11b(); build12(); build13(); build14(); build16();
+  }
+  Highcharts.setOptions({ lang:{ rangeSelectorZoom:"Zoom", thousandsSep:"," } });
+  build();
+  var mq=window.matchMedia("(prefers-color-scheme: dark)");
+  if(mq.addEventListener) mq.addEventListener("change",build);
+  new MutationObserver(build).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
+})();
+</script>
+</body>
+</html>
