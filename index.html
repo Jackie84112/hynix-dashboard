@@ -388,7 +388,7 @@ table.cmp.sum tr.gs:not(:first-child) td{ border-top:1px solid var(--muted) }
   }
   /* ---------- 圖十一：CapEx ---------- */
   function build11b(){
-    var yrs=[2023,2024,2025,2026], col={2023:"#9DC3E6",2024:"#2E86DE",2025:"#16A085",2026:"#E67E22"};
+    var yrs=[2023,2024,2025,2026], col={2023:"#9DC3E6",2024:"#9DC3E6",2025:"#9DC3E6",2026:"#9DC3E6"};
     function yr(i){ return 2000+ +Q[i].slice(0,2); }
     var cum=[]; CPX.forEach(function(v,i){ var q=+Q[i][3]; cum.push(q===1?v:cum[i-1]+v); });
     var pr=CPX.map(function(v,i){ return i<4?null:+(v/CPX[i-4]*100-100).toFixed(0); });
