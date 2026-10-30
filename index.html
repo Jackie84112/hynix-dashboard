@@ -147,6 +147,10 @@ table.cmp.sum tr.gs:not(:first-child) td{ border-top:1px solid var(--muted) }
   <p class="note">[註1]: 異常解釋：26Q3 投資現金流大幅流出，主要是長期金融投資轉出 30.85 兆韓元，不是資本支出；籌資現金流轉為流入，主要為 ADR 發行新股收入扣除庫藏股買回後的淨額，簡報列於「取得／處分庫藏股等」10.31 兆韓元（26Q3 簡報）。</p>
   <p class="note">[註2]: 淨利為剔除匯兌與其他業外損益後的淨利（口徑同三率圖）；資本支出欄為購置不動產、廠房及設備（總額，海力士無另列政府補助扣除）；自由現金流＝營業現金流 − 購置不動產、廠房及設備。</p>
 
+  <h2>現金、附息負債與淨現金</h2>
+  <div class="card"><div id="chart17" class="c l"></div></div>
+  <p class="note">[註]: 淨現金＝現金及短期金融商品 − 附息負債；26Q3 現金 114.46 兆、附息負債 15.80 兆，淨負債比 −32%（26Q3 簡報）。</p>
+
   <h2>技術路線：6F² 用到極限，再轉 4F² 或 3D DRAM</h2>
   <p class="note">[註1]: 目前量產使用 6F²，是綜合良率與成本結構、量產可靠度、客戶認證後的選擇，不只看單位面積更小、密度更高這一個維度（26Q3 法說會）。</p>
   <p class="note">[註2]: 公司正準備分階段路線圖，涵蓋現有 DRAM 的極限微縮，到 4F² 與 3D DRAM，技術與經濟條件到位後再轉換；與美光表態完全不考慮 4F² 不同。技術開發完成與商業化是兩個時點（自有摘要）。</p>
@@ -167,14 +171,6 @@ table.cmp.sum tr.gs:not(:first-child) td{ border-top:1px solid var(--muted) }
     </div>
   </div>
   <p class="note">[註3]: 100 兆韓元全數回購約占市值多少、股數減少多少，尚待計算；回購註銷使股數減少、EPS 提升，為每股盈餘的助力（自有摘要，待補數字）。</p>
-
-  <h2>現金流與淨現金</h2>
-  <div class="duo">
-    <div class="card"><div id="chart16" class="c"></div></div>
-    <div class="card"><div id="chart17" class="c"></div></div>
-  </div>
-  <p class="note">[註1]: 26Q3 營業現金流 54.78 兆韓元，低於 26Q2 的 65.71 兆；投資現金流 −42.89 兆，其中長期金融投資轉出 30.85 兆，並非資本支出；籌資現金流轉為流入 10.78 兆，主要為 ADR 發行新股收入扣除庫藏股買回後的淨額，簡報列於「取得／處分庫藏股等」10.31 兆韓元（26Q3 簡報）。</p>
-  <p class="note">[註2]: 淨現金＝現金及短期金融商品 − 附息負債；26Q3 現金 114.46 兆、附息負債 15.80 兆，淨負債比 −32%（26Q3 簡報）。自由現金流＝營業現金流 − 購置不動產、廠房及設備，為自行換算。</p>
 
 </div>
 
@@ -484,17 +480,10 @@ table.cmp.sum tr.gs:not(:first-child) td{ border-top:1px solid var(--muted) }
       series:[ { name:"特別股利（鎧俠實現利益）", type:"column", color:"#F39C12", data:[10000] }, { name:"獲利基準股利", type:"column", color:"#2E86DE", data:[10000] } ]
     });
   }
-  /* ---------- 圖十六／十七：現金流 ---------- */
+  /* ---------- 圖十七：現金與淨現金 ---------- */
   function build16(){
-    var fcf=CFO.map(function(v,i){ return v-CPX[i]; });
-    mk("chart16","營業現金流、資本支出與自由現金流（兆韓元）",{
-      xAxis:ax(Q), yAxis:ay("兆韓元",{ plotLines:[{value:0,color:tok("--muted"),width:1,zIndex:3}] }),
-      tooltip:tip(function(p){ return fmtT(p.y)+" 兆"; }),
-      plotOptions:{ column:{ pointPadding:0.04, groupPadding:0.1 } },
-      series:[ { name:"營業現金流", type:"column", color:tok("--bar"), data:CFO.map(T) }, { name:"購置 PP&E", type:"column", color:tok("--bar-est"), data:CPX.map(T) }, { name:"自由現金流", type:"column", color:tok("--yoy"), data:fcf.map(T) } ]
-    });
     mk("chart17","現金、附息負債與淨現金（兆韓元）",{
-      xAxis:ax(Q), yAxis:ay("兆韓元",{ min:0 }),
+      xAxis:ax(Q), yAxis:ay("兆韓元",{ plotLines:[{value:0,color:tok("--muted"),width:1,zIndex:3}] }),
       tooltip:tip(function(p){ return fmtT(p.y)+" 兆"; }),
       plotOptions:{ column:{ pointPadding:0.06, groupPadding:0.12 } },
       series:[ { name:"現金及短期金融商品", type:"column", color:"#2E86DE", data:CASH.map(T) }, { name:"附息負債", type:"column", color:"#8a94a3", data:DEBT.map(T) },
