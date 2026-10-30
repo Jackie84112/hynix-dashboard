@@ -391,6 +391,10 @@ table.cmp.sum tr.gs:not(:first-child) td{ border-top:1px solid var(--muted) }
     var idx={}; Q.forEach(function(q,i){ idx[ts(qKey(q))]=i; });
     var cols=CPX.map(function(v,i){ var d={x:ts(qKey(Q[i])), y:T(v)}; if(Q[i]==="25Q4") d.color=deep; return d; });
     var pr=CPX.map(function(v,i){ return [ts(qKey(Q[i])), i<4?null:+(v/CPX[i-4]*100-100).toFixed(0)]; });
+    // 26Q4E：2026 CapEx 指引 high 40T 取中值 48 兆 − 前三季實際（自行推算）
+    var EQ="26Q4", EV=48000-CPX.slice(-3).reduce(function(a,b){return a+b;},0), ex=ts(qKey(EQ)), lastX=ts(qKey(Q[Q.length-1]));
+    var eYoY=+(EV/CPX[Q.indexOf("25Q4")]*100-100).toFixed(0);
+    function eToggle(on){ return function(){ var a=this.chart.xAxis[0]; a.setExtremes(a.min,(on?ex:lastX)+45*864e5); }; }
     charts.chart11 && charts.chart11.destroy();
     charts.chart11=Highcharts.stockChart("chart11",{
       chart:{ backgroundColor:card, style:{fontFamily:font}, spacing:[10,16,8,8] },
@@ -409,13 +413,16 @@ table.cmp.sum tr.gs:not(:first-child) td{ border-top:1px solid var(--muted) }
       ],
       tooltip:{ shared:true, split:false, useHTML:true, backgroundColor:card, borderColor:grid, style:{color:fg,fontSize:"12px"},
         formatter:function(){ var i=idx[this.x], s="<b>"+(i>=0?Q[i]:qLabel(this.x))+"</b>";
+          if(this.x===ex) return s+"（預估）<br>季度購置：<b>"+fmtT(EV/1000)+" 兆</b><br>年增率：<b>"+fmtP(eYoY)+"</b><br>當年累計：<b>48.00 兆</b>（指引 high 40T 取中值）<br><span style=\"color:"+muted+"\">＝48 兆 − 前三季 31.0 兆，自行推算</span>";
           this.points.forEach(function(p){ var isL=p.series.options.yAxis===1;
             s+='<br><span style="color:'+p.color+'">●</span> '+(isL?"年增率":"季度購置")+": <b>"+(isL?fmtP(p.y):fmtT(p.y)+" 兆")+"</b>"; });
           return s+(i>=0?"<br>當年累計：<b>"+fmtT(cum[i]/1000)+" 兆</b>":""); } },
       plotOptions:{ column:{ borderWidth:0, pointRange:QQ, pointPadding:0.18, groupPadding:0, dataGrouping:{enabled:false} },
         line:{ lineWidth:2, marker:{enabled:true,radius:3.5,symbol:"circle"}, dataGrouping:{enabled:false} }, series:{ showInNavigator:false, states:{inactive:{opacity:1}} } },
       series:[ { name:"季度購置(L)", type:"column", color:light, yAxis:0, data:cols },
-               { name:"年增率(R)", type:"line", color:tok("--yoy"), yAxis:1, data:pr } ]
+               { name:"年增率(R)", type:"line", color:tok("--yoy"), yAxis:1, data:pr },
+               { id:"capexE", name:"26Q4 預估", type:"column", color:deep, yAxis:0, data:[[ex,T(EV)]], visible:false, events:{ show:eToggle(true), hide:eToggle(false) } },
+               { name:"年增率預估", type:"line", color:tok("--yoy"), dashStyle:"ShortDash", yAxis:1, data:[pr[pr.length-1],[ex,eYoY]], linkedTo:"capexE", visible:false } ]
     });
   }
   /* ---------- 圖十五：新產能時程 ---------- */
