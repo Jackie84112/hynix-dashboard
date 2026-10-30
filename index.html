@@ -145,7 +145,7 @@ table.cmp.sum tr.gs:not(:first-child) td{ border-top:1px solid var(--muted) }
   <h2>海力士季度損益與現金流</h2>
   <div class="card"><div id="chartCF" class="c xl"></div></div>
   <p class="note">[註1]: 異常解釋：26Q3 投資現金流大幅流出，主要是長期金融投資轉出 30.85 兆韓元，不是資本支出；籌資現金流轉為流入，主要是庫藏股處分等 10.31 兆韓元（26Q3 簡報）。</p>
-  <p class="note">[註2]: 淨利為剔除匯兌與其他業外損益後的淨利（口徑同三率圖）；淨資本支出欄為購置不動產、廠房及設備（總額，海力士無另列政府補助扣除）；自由現金流＝營業現金流 − 購置不動產、廠房及設備。</p>
+  <p class="note">[註2]: 淨利為剔除匯兌與其他業外損益後的淨利（口徑同三率圖）；資本支出欄為購置不動產、廠房及設備（總額，海力士無另列政府補助扣除）；自由現金流＝營業現金流 − 購置不動產、廠房及設備。</p>
 
   <h2>技術路線：6F² 用到極限，再轉 4F² 或 3D DRAM</h2>
   <p class="note">[註1]: 目前量產使用 6F²，是綜合良率與成本結構、量產可靠度、客戶認證後的選擇，不只看單位面積更小、密度更高這一個維度（26Q3 法說會）。</p>
@@ -517,7 +517,7 @@ table.cmp.sum tr.gs:not(:first-child) td{ border-top:1px solid var(--muted) }
         { name:"營業現金流", type:"column", color:"#42A9E5", data:sl(CFO) },
         { name:"投資現金流", type:"column", color:"#8E44AD", data:CFI5.map(T), signed:true },
         { name:"籌資現金流", type:"column", color:"#F39C12", data:CFF5.map(T), signed:true },
-        { name:"淨資本支出", type:"column", color:"#A9D4F2", data:sl(CPX) },
+        { name:"資本支出", type:"column", color:"#A9D4F2", data:sl(CPX) },
         { name:"自由現金流", type:"column", color:tok("--yoy"), data:sl(CFO.map(function(v,i){ return v-CPX[i]; })) }
       ]
     });
