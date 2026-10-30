@@ -449,7 +449,7 @@ table.cmp.sum tr.gs:not(:first-child) td{ border-top:1px solid var(--muted) }
       xAxis:ax(["現金分紅","庫藏股"]), yAxis:ay("兆韓元",{ min:0, max:70, tickInterval:10, stackLabels:{enabled:false} }),
       tooltip:{ formatter:function(){ return "<b>"+this.series.name+"</b><br>"+this.x+"："+this.y+" 兆+"; } },
       plotOptions:{ series:{ stacking:"normal", dataLabels:{ enabled:true, formatter:function(){ return this.y?this.y+"+":""; }, style:{color:"#fff",fontSize:"11px",fontWeight:"500",textOutline:"none"} } }, bar:{ borderWidth:0, pointPadding:0.15 } },
-      series:[ { name:"Q3 員工獎酬用買回", color:"#8a94a3", data:[0,10] },
+      series:[ { name:"Q3 員工獎酬用買回", color:"#8a94a3", data:[0,10], enableMouseTracking:false },
                { name:"回購註銷（8 月 40＋Q3 10）", color:"#E67E22", data:[0,50] }, { name:"現金分紅", color:"#2E86DE", data:[30,0] } ]
     });
   }
