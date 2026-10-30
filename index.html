@@ -139,7 +139,7 @@ table.cmp.sum tr.gs:not(:first-child) td{ border-top:1px solid var(--muted) }
   <p class="note">[註1]: 2026 年 CapEx 指引為 high 40T KRW range（26Q2 法說會，M15X 量產提前、龍仁 Fab 1 於 2027 年初擴產）；2027 年預期較 2026 年大幅增加，用於先進製程與 Y1 擴產，並加速韓國與海外基礎建設（26Q3 法說會）。</p>
   <p class="note">[註2]: 圖中為現金流量表「購置不動產、廠房及設備」，與公司 CapEx 指引口徑可能不同；2026 年前三季合計 31.0 兆韓元。</p>
   <p class="note">[註3]: 觀察重點：26Q4 起產能大幅增加，擴產速度是否與行業一致，或出現加速擴產跡象；短期有利營收，但破壞行業紀律，未來可能導致周期反轉。美光與海力士目前都承諾 2027 年繼續增加資本支出（自有摘要）。</p>
-  <p class="note">[註4]: 圖中為現金流量表的購置總額，現金基礎，不含政府補助與出售資產所得；美光的「淨資本支出」是購置總額扣除政府獎勵與出售資產所得後的淨額（FQ4'26：購置 111.1 億美元、淨額 107.7 億美元），與海力士並排比較時，口徑相近者為美光的購置總額。圖例可點選各年度開關。</p>
+  <p class="note">[註4]: 圖中為現金流量表的購置總額，現金基礎，不含政府補助與出售資產所得；美光的「淨資本支出」是購置總額扣除政府獎勵與出售資產所得後的淨額（FQ4'26：購置 111.1 億美元、淨額 107.7 億美元），與海力士並排比較時，口徑相近者為美光的購置總額。</p>
 
   <h2>供給：加項（新產能時程）</h2>
   <div class="card"><div id="chartFab" class="c"></div></div>
@@ -388,19 +388,37 @@ table.cmp.sum tr.gs:not(:first-child) td{ border-top:1px solid var(--muted) }
   }
   /* ---------- 圖十一：CapEx ---------- */
   function build11b(){
-    var yrs=[2023,2024,2025,2026], col={2023:"#9DC3E6",2024:"#9DC3E6",2025:"#9DC3E6",2026:"#9DC3E6"};
-    function yr(i){ return 2000+ +Q[i].slice(0,2); }
+    var fg=tok("--fg"), muted=tok("--muted"), grid=tok("--grid"), card=tok("--card"), font=tok("--font"), QQ=92*864e5;
+    var light="#9DC3E6", deep="#2E86DE";
     var cum=[]; CPX.forEach(function(v,i){ var q=+Q[i][3]; cum.push(q===1?v:cum[i-1]+v); });
-    var pr=CPX.map(function(v,i){ return i<4?null:+(v/CPX[i-4]*100-100).toFixed(0); });
-    var cols=yrs.map(function(y){ return { name:String(y), type:"column", color:col[y], yAxis:0, data:CPX.map(function(v,i){ return yr(i)===y?T(v):null; }) }; });
-    mk("chart11","購置不動產、廠房及設備（季度，兆韓元）",{
-      xAxis:ax(Q), yAxis:[ ay("兆韓元",{min:0}), ay("YoY",{ opposite:true, gridLineWidth:0, labels:{style:{color:tok("--muted"),fontSize:"11px"},format:"{value}%"} }) ],
-      plotOptions:{ column:{ grouping:false, pointPadding:0.15 } },
-      tooltip:{ formatter:function(){ var i=Q.indexOf(this.x), s="<b>"+this.x+"</b>";
-        this.points.forEach(function(p){ var isL=p.series.options.yAxis===1;
-          s+='<br><span style="color:'+p.color+'">●</span> '+(isL?"年增率":"季度購置")+": <b>"+(isL?fmtP(p.y):fmtT(p.y)+" 兆")+"</b>"; });
-        return s+"<br>當年累計：<b>"+fmtT(cum[i]/1000)+" 兆</b>"; } },
-      series:cols.concat([ { name:"年增率(R)", type:"line", color:tok("--yoy"), yAxis:1, data:pr } ])
+    var idx={}; Q.forEach(function(q,i){ idx[ts(qKey(q))]=i; });
+    var cols=CPX.map(function(v,i){ var d={x:ts(qKey(Q[i])), y:T(v)}; if(Q[i]==="25Q4") d.color=deep; return d; });
+    var pr=CPX.map(function(v,i){ return [ts(qKey(Q[i])), i<4?null:+(v/CPX[i-4]*100-100).toFixed(0)]; });
+    charts.chart11 && charts.chart11.destroy();
+    charts.chart11=Highcharts.stockChart("chart11",{
+      chart:{ backgroundColor:card, style:{fontFamily:font}, spacing:[10,16,8,8] },
+      title:{ text:"購置不動產、廠房及設備（季度，兆韓元）", style:{color:fg,fontSize:"15px",fontWeight:"700"} },
+      credits:{enabled:false}, navigator:{enabled:false}, scrollbar:{enabled:false},
+      rangeSelector:{ selected:0, inputEnabled:false,
+        buttons:[{type:"all",text:"All"},{type:"year",count:1,text:"1y"},{type:"year",count:2,text:"2y"},{type:"year",count:3,text:"3y"}],
+        buttonTheme:{ fill:"none", stroke:"none", r:4, style:{color:muted,fontSize:"12px"}, states:{ hover:{fill:grid,style:{color:fg}}, select:{fill:"#3bbd8f",style:{color:"#fff",fontWeight:"500"}} } },
+        labelStyle:{color:muted,fontSize:"12px"} },
+      legend:{ enabled:true, align:"center", verticalAlign:"bottom", itemStyle:{color:fg,fontSize:"12px",fontWeight:"400"}, itemHiddenStyle:{color:"#9aa5b1"}, itemHoverStyle:{color:fg} },
+      xAxis:{ type:"datetime", lineColor:grid, tickColor:grid, labels:{style:{color:muted,fontSize:"11px"}}, ordinal:false, minRange:180*864e5,
+        max:ts("2026-07")+45*864e5, units:[["month",[3,6]],["year",[1,2]]], dateTimeLabelFormats:{month:"%b %Y",year:"%Y"} },
+      yAxis:[
+        { title:{text:"兆韓元",style:{color:muted,fontSize:"11px"}}, gridLineColor:grid, min:0, opposite:false, labels:{style:{color:muted,fontSize:"11px"}} },
+        { title:{text:"YoY",style:{color:muted,fontSize:"11px"}}, opposite:true, gridLineWidth:0, labels:{style:{color:muted,fontSize:"11px"},format:"{value}%"} }
+      ],
+      tooltip:{ shared:true, split:false, useHTML:true, backgroundColor:card, borderColor:grid, style:{color:fg,fontSize:"12px"},
+        formatter:function(){ var i=idx[this.x], s="<b>"+(i>=0?Q[i]:qLabel(this.x))+"</b>";
+          this.points.forEach(function(p){ var isL=p.series.options.yAxis===1;
+            s+='<br><span style="color:'+p.color+'">●</span> '+(isL?"年增率":"季度購置")+": <b>"+(isL?fmtP(p.y):fmtT(p.y)+" 兆")+"</b>"; });
+          return s+(i>=0?"<br>當年累計：<b>"+fmtT(cum[i]/1000)+" 兆</b>":""); } },
+      plotOptions:{ column:{ borderWidth:0, pointRange:QQ, pointPadding:0.18, groupPadding:0, dataGrouping:{enabled:false} },
+        line:{ lineWidth:2, marker:{enabled:true,radius:3.5,symbol:"circle"}, dataGrouping:{enabled:false} }, series:{ showInNavigator:false, states:{inactive:{opacity:1}} } },
+      series:[ { name:"季度購置(L)", type:"column", color:light, yAxis:0, data:cols },
+               { name:"年增率(R)", type:"line", color:tok("--yoy"), yAxis:1, data:pr } ]
     });
   }
   /* ---------- 圖十五：新產能時程 ---------- */
