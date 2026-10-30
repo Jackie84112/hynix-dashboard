@@ -382,13 +382,14 @@ ul.terms b{ font-weight:700 }
   /* ---------- 圖九／十：需求（LTA） ---------- */
   function build9(){
     var lab={ enabled:true, style:{color:tok("--fg"),fontSize:"11px",fontWeight:"500",textOutline:"none"} };
-    mk("chart9","2027–28 年產能簽約比例",{
-      xAxis:ax(["2027","2028"]), yAxis:ay("占總產能",{ min:0, max:100, tickInterval:25, reversedStacks:false, labels:{style:{color:tok("--muted"),fontSize:"11px"},format:"{value}%"},
-        plotLines:[{value:50,color:"#E74C3C",dashStyle:"ShortDash",width:1.5,zIndex:5,label:{text:"50%",align:"right",style:{color:"#E74C3C",fontSize:"11px"}}}] }),
-      tooltip:{ formatter:function(){ return "<b>"+this.x+"</b><br>已簽約（LTA）：<b>50% 以上</b><br>其餘：未簽約或洽談中"; } },
-      plotOptions:{ column:{ stacking:"normal", pointPadding:0.15 } },
-      series:[ { name:"已簽約（LTA）", type:"column", color:tok("--bar"), data:[50,50], dataLabels:Highcharts.merge(lab,{ formatter:function(){ return "50%+"; }, style:{color:"#fff"} }) },
-               { name:"未簽約／洽談中", type:"column", color:tok("--bar-est"), data:[50,50] } ]
+    mk("chart9","需求被鎖定的比例",{
+      chart:{ type:"bar" },
+      xAxis:{ categories:["2027 年產能已簽約","2028 年產能已簽約"], lineColor:tok("--grid"), tickColor:tok("--grid"), labels:{style:{color:tok("--fg"),fontSize:"12px"}} },
+      yAxis:ay("Percent",{ min:0, max:100, tickInterval:25, labels:{style:{color:tok("--muted"),fontSize:"11px"},format:"{value}%"} }),
+      plotOptions:{ bar:{ grouping:false, borderWidth:0, borderRadius:3, pointPadding:0.22, groupPadding:0 } },
+      tooltip:{ shared:false, formatter:function(){ return "<b>"+this.x+"</b><br>LTA 已簽約：<b>50% 以上</b>"; } },
+      series:[ { name:"track", color:tok("--grid"), data:[100,100], enableMouseTracking:false, showInLegend:false },
+               { name:"已簽約（LTA）", color:tok("--bar"), data:[50,50], dataLabels:Highcharts.merge(lab,{ inside:true, align:"right", formatter:function(){ return "50%+"; }, style:{color:"#fff"} }) } ]
     });
     mk("chart9b","HBM：客戶需求 vs 目前供給",{
       xAxis:ax(["目前供給","客戶需求"]), yAxis:ay("倍（目前供給＝1）",{ min:0, max:2.5, tickInterval:0.5 }),
@@ -397,12 +398,12 @@ ul.terms b{ font-weight:700 }
       plotOptions:{ series:{ dataLabels:Highcharts.merge(lab,{ formatter:function(){ return this.point.txt; } }) } },
       series:[ { name:"HBM", type:"column", data:[{y:1,txt:"1 倍",color:"#7f8c9a"},{y:2,txt:"2 倍以上",color:tok("--bar")}] } ]
     });
-    mk("chart10","長期協議（LTA）客戶數",{
-      xAxis:ax(["26Q2 法說會","26Q3 法說會"]), yAxis:ay("家",{ min:0, max:16, tickInterval:4 }),
-      legend:{enabled:false},
-      tooltip:{ formatter:function(){ return "<b>"+this.x+"</b><br>簽約客戶：<b>"+this.points[0].point.txt+"</b>"; } },
-      plotOptions:{ series:{ dataLabels:{ enabled:true, formatter:function(){ return this.point.txt; }, style:{color:tok("--fg"),fontSize:"11px",fontWeight:"500",textOutline:"none"} } } },
-      series:[ { name:"LTA 客戶數", type:"column", color:tok("--bar"), data:[{y:10,txt:"約 10 家"},{y:14,txt:"14 家"}] } ]
+    mk("chart10","LTA 客戶數：上季 vs 本季",{
+      xAxis:ax(["長期協議（LTA）客戶"]), yAxis:ay("家",{ min:0, max:16, tickInterval:4 }),
+      tooltip:{ shared:false, formatter:function(){ return "<b>"+this.series.name+"</b><br>簽約客戶：<b>"+this.point.txt+"</b>"; } },
+      plotOptions:{ column:{ pointPadding:0.08, groupPadding:0.28 }, series:{ dataLabels:Highcharts.merge(lab,{ formatter:function(){ return this.point.txt; } }) } },
+      series:[ { name:"26Q2（約 10 家）", type:"column", color:tok("--bar-est"), data:[{y:10,txt:"約 10 家"}] },
+               { name:"26Q3（14 家）", type:"column", color:tok("--bar"), data:[{y:14,txt:"14 家"}] } ]
     });
   }
   /* ---------- 圖十一：CapEx ---------- */
