@@ -146,11 +146,6 @@ table.cmp.sum tr.gs:not(:first-child) td{ border-top:1px solid var(--muted) }
   <p class="note">[註1]: 目前量產使用 6F²，是綜合良率與成本結構、量產可靠度、客戶認證後的選擇，不只看單位面積更小、密度更高這一個維度（26Q3 法說會）。</p>
   <p class="note">[註2]: 公司正準備分階段路線圖，涵蓋現有 DRAM 的極限微縮，到 4F² 與 3D DRAM，技術與經濟條件到位後再轉換；與美光表態完全不考慮 4F² 不同。技術開發完成與商業化是兩個時點（自有摘要）。</p>
 
-  <h2>預期差：實際 vs 賣方共識</h2>
-  <div class="card"><div id="chart12" class="c l"></div></div>
-  <p class="note">[註1]: 共識來源：25Q1–25Q2 為 LSEG；26Q1 為 Newsquawk；26Q2 與 26Q3 為 FnGuide（26Q3 共識營收 98.23 兆、營業利益 76.96 兆，10/26 引用）；25Q4 各媒體口徑不同，取區間中值；25Q3 未找到可靠共識。</p>
-  <p class="note">[註2]: 26Q2 低於共識約 5.5%（HBM4 出貨低於預期、高附加價值產品遞延、混合 ASP 受組合影響）；26Q3 營收超出約 6.5%、營業利益超出約 8.3%，且是在韓元大幅升值的不利下達成，若加回匯率影響營收約 115 兆韓元（自有摘要）。</p>
-
   <h2>三家 HBM 市佔率比較</h2>
   <div class="card"><div id="chart13" class="c l"></div></div>
   <p class="note">資料：Counterpoint，營收口徑，經韓國媒體引述；3Q25 與 2Q25 美光市占為 100% 減另兩家推得。2Q25 曾以出貨量口徑公布為 62/17/21，此處統一用營收口徑。</p>
@@ -449,17 +444,6 @@ table.cmp.sum tr.gs:not(:first-child) td{ border-top:1px solid var(--muted) }
       series:[ { name:"出貨（爬坡期）", color:tok("--bar-est"), data:ramp }, { name:"放量", color:tok("--bar"), data:full } ]
     });
   }
-  /* ---------- 圖十二：預期差 ---------- */
-  function build12(){
-    var C=["25Q1","25Q2","25Q3","25Q4","26Q1","26Q2","26Q3"];
-    mk("chart12","實際 vs 賣方共識（差異 %）",{
-      xAxis:ax(C), yAxis:ay("Percent",{ labels:{style:{color:tok("--muted"),fontSize:"11px"},format:"{value}%"}, plotLines:[{value:0,color:tok("--muted"),width:1,zIndex:3}] }),
-      tooltip:tip(function(p){ return p.y==null?"—":fmtP(p.y); },function(t){ return t.x==="25Q3"?"<br>未找到可靠共識":(t.x==="25Q4"?"<br>共識為媒體區間中值":""); }),
-      plotOptions:{ column:{ pointPadding:0.06, groupPadding:0.14 }, series:{ dataLabels:{ enabled:true, formatter:function(){ return this.y==null?"":(this.y>0?"+":"")+this.y.toFixed(1); }, style:{color:tok("--fg"),fontSize:"10px",fontWeight:"500",textOutline:"none"} } } },
-      series:[ { name:"營收", type:"column", color:tok("--bar"), data:[2.2,8.1,null,4.1,-1.9,-5.5,6.5] },
-               { name:"營業利益", type:"column", color:"#2E86DE", data:[12.4,2.4,null,12.3,-0.8,-5.4,8.3] } ]
-    });
-  }
   /* ---------- 圖十三：HBM 市占 ---------- */
   function build13(){
     mk("chart13","HBM 營收市占率",{
@@ -507,7 +491,7 @@ table.cmp.sum tr.gs:not(:first-child) td{ border-top:1px solid var(--muted) }
 
   function build(){
     build1(); build2();
-    build6(); build7(); build9(); build11b(); build15(); build12(); build13(); build14(); build16();
+    build6(); build7(); build9(); build11b(); build15(); build13(); build14(); build16();
   }
   Highcharts.setOptions({ lang:{ rangeSelectorZoom:"Zoom", thousandsSep:"," } });
   build();
