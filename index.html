@@ -455,10 +455,11 @@ table.cmp.sum tr.gs:not(:first-child) td{ border-top:1px solid var(--muted) }
     mk("chart14","2026 年股東回報組成（兆韓元，約數）",{
       chart:{type:"bar"},
       xAxis:ax(["現金分紅","庫藏股"]), yAxis:ay("兆韓元",{ min:0, max:70, tickInterval:10, stackLabels:{enabled:false} }),
-      tooltip:{ formatter:function(){ return "<b>"+this.series.name+"</b><br>"+this.x+"："+this.y+" 兆+"; } },
+      tooltip:{ formatter:function(){ return this.point.tip?"<b>現金分紅</b><br>"+this.point.tip:"<b>"+this.series.name+"</b><br>"+this.x+"："+this.y+" 兆+"; } },
       plotOptions:{ series:{ stacking:"normal", dataLabels:{ enabled:true, formatter:function(){ return this.y?this.y+"+":""; }, style:{color:"#fff",fontSize:"11px",fontWeight:"500",textOutline:"none"} } }, bar:{ borderWidth:0, pointPadding:0.15 } },
       series:[ { name:"Q3 員工獎酬用買回", color:"#8a94a3", data:[0,10] }, { name:"Q3 回購註銷", color:"#F39C12", data:[0,10] },
-               { name:"8 月回購（已完成，待註銷）", color:"#E67E22", data:[0,40] }, { name:"Q3 現金分紅", color:"#2E86DE", data:[14,0] }, { name:"其餘現金分紅", color:"#16A085", data:[16,0] } ]
+               { name:"8 月回購（已完成，待註銷）", color:"#E67E22", data:[0,40] }, { id:"div", name:"現金分紅", color:"#2E86DE", borderWidth:1, borderColor:tok("--card"), data:[{y:16,lab:"Q4 公佈 16+",tip:"年底股利：16 兆+（含其餘鎧俠特別股利，預計隨 Q4 財報公佈）"},0], dataLabels:{ formatter:function(){ return this.point.lab||""; } } },
+               { name:"現金分紅", linkedTo:"div", color:"#2E86DE", borderWidth:1, borderColor:tok("--card"), data:[{y:14,lab:"Q3 公佈 14",tip:"Q3 公佈：14 兆（每股 20,000 韓元，含鎧俠特別股利 10,000）"},0], dataLabels:{ formatter:function(){ return this.point.lab||""; } } } ]
     });
     mk("chart15","Q3 每股股利（韓元，約數）",{
       xAxis:ax(["Q3 股利"]), yAxis:ay("KRW",{ min:0, max:22000, tickInterval:5000, labels:{style:{color:tok("--muted"),fontSize:"11px"},format:"{value:,.0f}"} }),
